@@ -6,56 +6,32 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+    interface AmbulanceManagementMainContainer {
     }
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLAmbulanceManagementMainContainerElement extends Components.AmbulanceManagementMainContainer, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLAmbulanceManagementMainContainerElement: {
+        prototype: HTMLAmbulanceManagementMainContainerElement;
+        new (): HTMLAmbulanceManagementMainContainerElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "ambulance-management-main-container": HTMLAmbulanceManagementMainContainerElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
+    interface AmbulanceManagementMainContainer {
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "ambulance-management-main-container": AmbulanceManagementMainContainer;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "ambulance-management-main-container": LocalJSX.IntrinsicElements["ambulance-management-main-container"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementMainContainerElement>;
         }
     }
 }
