@@ -2,6 +2,7 @@ import { Config } from '@stencil/core';
 
 export const config: Config = {
   namespace: 'ambulance-management',
+  globalScript: 'src/global/app.ts',
   outputTargets: [
     {
       type: 'dist',

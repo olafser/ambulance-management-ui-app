@@ -7,12 +7,11 @@ describe('ambulance-management-main-container', () => {
       components: [AmbulanceManagementMainContainer],
       html: `<ambulance-management-main-container></ambulance-management-main-container>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ambulance-management-main-container>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ambulance-management-main-container>
-    `);
+
+    const wlList = page.rootInstance as AmbulanceManagementMainContainer;
+    const expectedPatients = wlList?.waitingPatients?.length
+
+    const items = page.root.shadowRoot.querySelectorAll("md-list-item");
+    expect(items.length).toEqual(expectedPatients);
   });
 });
