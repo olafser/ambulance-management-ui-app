@@ -6,10 +6,30 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface AmbulanceApp {
+        /**
+          * @default ''
+         */
+        "basePath": string;
+    }
+    interface AmbulanceDispatchManagement {
+    }
     interface AmbulanceManagementMainContainer {
     }
 }
 declare global {
+    interface HTMLAmbulanceAppElement extends Components.AmbulanceApp, HTMLStencilElement {
+    }
+    var HTMLAmbulanceAppElement: {
+        prototype: HTMLAmbulanceAppElement;
+        new (): HTMLAmbulanceAppElement;
+    };
+    interface HTMLAmbulanceDispatchManagementElement extends Components.AmbulanceDispatchManagement, HTMLStencilElement {
+    }
+    var HTMLAmbulanceDispatchManagementElement: {
+        prototype: HTMLAmbulanceDispatchManagementElement;
+        new (): HTMLAmbulanceDispatchManagementElement;
+    };
     interface HTMLAmbulanceManagementMainContainerElement extends Components.AmbulanceManagementMainContainer, HTMLStencilElement {
     }
     var HTMLAmbulanceManagementMainContainerElement: {
@@ -17,13 +37,30 @@ declare global {
         new (): HTMLAmbulanceManagementMainContainerElement;
     };
     interface HTMLElementTagNameMap {
+        "ambulance-app": HTMLAmbulanceAppElement;
+        "ambulance-dispatch-management": HTMLAmbulanceDispatchManagementElement;
         "ambulance-management-main-container": HTMLAmbulanceManagementMainContainerElement;
     }
 }
 declare namespace LocalJSX {
+    interface AmbulanceApp {
+        /**
+          * @default ''
+         */
+        "basePath"?: string;
+    }
+    interface AmbulanceDispatchManagement {
+    }
     interface AmbulanceManagementMainContainer {
     }
+
+    interface AmbulanceAppAttributes {
+        "basePath": string;
+    }
+
     interface IntrinsicElements {
+        "ambulance-app": Omit<AmbulanceApp, keyof AmbulanceAppAttributes> & { [K in keyof AmbulanceApp & keyof AmbulanceAppAttributes]?: AmbulanceApp[K] } & { [K in keyof AmbulanceApp & keyof AmbulanceAppAttributes as `attr:${K}`]?: AmbulanceAppAttributes[K] } & { [K in keyof AmbulanceApp & keyof AmbulanceAppAttributes as `prop:${K}`]?: AmbulanceApp[K] };
+        "ambulance-dispatch-management": AmbulanceDispatchManagement;
         "ambulance-management-main-container": AmbulanceManagementMainContainer;
     }
 }
@@ -31,6 +68,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ambulance-app": LocalJSX.IntrinsicElements["ambulance-app"] & JSXBase.HTMLAttributes<HTMLAmbulanceAppElement>;
+            "ambulance-dispatch-management": LocalJSX.IntrinsicElements["ambulance-dispatch-management"] & JSXBase.HTMLAttributes<HTMLAmbulanceDispatchManagementElement>;
             "ambulance-management-main-container": LocalJSX.IntrinsicElements["ambulance-management-main-container"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementMainContainerElement>;
         }
     }
