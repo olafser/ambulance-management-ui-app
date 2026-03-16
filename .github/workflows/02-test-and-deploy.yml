@@ -1,11 +1,7 @@
-name: Run tests and build Docker image
+name: test-and-deploy
 
 on:
   push:
-    branches: [ "main" ]
-    tags:
-      - 'v1*'
-  pull_request:
     branches: [ "main" ]
 
 jobs:
