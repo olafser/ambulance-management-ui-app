@@ -9,7 +9,7 @@ export class AmbulanceManagementMainContainer {
   render() {
     return (
       <Host>
-        <h1>Welcome to Ambulance Management Module</h1>
+        <h1 class="main-title">Welcome to Ambulance Management Module</h1>
       </Host>
     );
   }
