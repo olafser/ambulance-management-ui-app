@@ -6,32 +6,71 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface AmbulanceManagementAmbulanceCrewManagement {
+    }
     interface AmbulanceManagementMainContainer {
+        /**
+          * @default '/'
+         */
+        "basePath": string;
+    }
+    interface AmbulanceManagementParamedicVehicleManagement {
     }
 }
 declare global {
+    interface HTMLAmbulanceManagementAmbulanceCrewManagementElement extends Components.AmbulanceManagementAmbulanceCrewManagement, HTMLStencilElement {
+    }
+    var HTMLAmbulanceManagementAmbulanceCrewManagementElement: {
+        prototype: HTMLAmbulanceManagementAmbulanceCrewManagementElement;
+        new (): HTMLAmbulanceManagementAmbulanceCrewManagementElement;
+    };
     interface HTMLAmbulanceManagementMainContainerElement extends Components.AmbulanceManagementMainContainer, HTMLStencilElement {
     }
     var HTMLAmbulanceManagementMainContainerElement: {
         prototype: HTMLAmbulanceManagementMainContainerElement;
         new (): HTMLAmbulanceManagementMainContainerElement;
     };
+    interface HTMLAmbulanceManagementParamedicVehicleManagementElement extends Components.AmbulanceManagementParamedicVehicleManagement, HTMLStencilElement {
+    }
+    var HTMLAmbulanceManagementParamedicVehicleManagementElement: {
+        prototype: HTMLAmbulanceManagementParamedicVehicleManagementElement;
+        new (): HTMLAmbulanceManagementParamedicVehicleManagementElement;
+    };
     interface HTMLElementTagNameMap {
+        "ambulance-management-ambulance-crew-management": HTMLAmbulanceManagementAmbulanceCrewManagementElement;
         "ambulance-management-main-container": HTMLAmbulanceManagementMainContainerElement;
+        "ambulance-management-paramedic-vehicle-management": HTMLAmbulanceManagementParamedicVehicleManagementElement;
     }
 }
 declare namespace LocalJSX {
-    interface AmbulanceManagementMainContainer {
+    interface AmbulanceManagementAmbulanceCrewManagement {
     }
+    interface AmbulanceManagementMainContainer {
+        /**
+          * @default '/'
+         */
+        "basePath"?: string;
+    }
+    interface AmbulanceManagementParamedicVehicleManagement {
+    }
+
+    interface AmbulanceManagementMainContainerAttributes {
+        "basePath": string;
+    }
+
     interface IntrinsicElements {
-        "ambulance-management-main-container": AmbulanceManagementMainContainer;
+        "ambulance-management-ambulance-crew-management": AmbulanceManagementAmbulanceCrewManagement;
+        "ambulance-management-main-container": Omit<AmbulanceManagementMainContainer, keyof AmbulanceManagementMainContainerAttributes> & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes]?: AmbulanceManagementMainContainer[K] } & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes as `attr:${K}`]?: AmbulanceManagementMainContainerAttributes[K] } & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes as `prop:${K}`]?: AmbulanceManagementMainContainer[K] };
+        "ambulance-management-paramedic-vehicle-management": AmbulanceManagementParamedicVehicleManagement;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ambulance-management-ambulance-crew-management": LocalJSX.IntrinsicElements["ambulance-management-ambulance-crew-management"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementAmbulanceCrewManagementElement>;
             "ambulance-management-main-container": LocalJSX.IntrinsicElements["ambulance-management-main-container"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementMainContainerElement>;
+            "ambulance-management-paramedic-vehicle-management": LocalJSX.IntrinsicElements["ambulance-management-paramedic-vehicle-management"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementParamedicVehicleManagementElement>;
         }
     }
 }
