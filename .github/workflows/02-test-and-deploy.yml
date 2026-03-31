@@ -1,8 +1,10 @@
 name: test-and-deploy
 
 on:
+  workflow_dispatch:    # Runs when manually triggered
   push:
     branches: [ "main" ]
+    tags: [ "v1*" ]
 
 jobs:
   test:
