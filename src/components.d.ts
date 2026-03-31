@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface AmbulanceManagementAmbulanceCrewManagement {
+    interface AmbulanceManagementAmbulanceDispatchManagement {
     }
     interface AmbulanceManagementMainContainer {
         /**
@@ -18,11 +18,11 @@ export namespace Components {
     }
 }
 declare global {
-    interface HTMLAmbulanceManagementAmbulanceCrewManagementElement extends Components.AmbulanceManagementAmbulanceCrewManagement, HTMLStencilElement {
+    interface HTMLAmbulanceManagementAmbulanceDispatchManagementElement extends Components.AmbulanceManagementAmbulanceDispatchManagement, HTMLStencilElement {
     }
-    var HTMLAmbulanceManagementAmbulanceCrewManagementElement: {
-        prototype: HTMLAmbulanceManagementAmbulanceCrewManagementElement;
-        new (): HTMLAmbulanceManagementAmbulanceCrewManagementElement;
+    var HTMLAmbulanceManagementAmbulanceDispatchManagementElement: {
+        prototype: HTMLAmbulanceManagementAmbulanceDispatchManagementElement;
+        new (): HTMLAmbulanceManagementAmbulanceDispatchManagementElement;
     };
     interface HTMLAmbulanceManagementMainContainerElement extends Components.AmbulanceManagementMainContainer, HTMLStencilElement {
     }
@@ -37,13 +37,13 @@ declare global {
         new (): HTMLAmbulanceManagementParamedicVehicleManagementElement;
     };
     interface HTMLElementTagNameMap {
-        "ambulance-management-ambulance-crew-management": HTMLAmbulanceManagementAmbulanceCrewManagementElement;
+        "ambulance-management-ambulance-dispatch-management": HTMLAmbulanceManagementAmbulanceDispatchManagementElement;
         "ambulance-management-main-container": HTMLAmbulanceManagementMainContainerElement;
         "ambulance-management-paramedic-vehicle-management": HTMLAmbulanceManagementParamedicVehicleManagementElement;
     }
 }
 declare namespace LocalJSX {
-    interface AmbulanceManagementAmbulanceCrewManagement {
+    interface AmbulanceManagementAmbulanceDispatchManagement {
     }
     interface AmbulanceManagementMainContainer {
         /**
@@ -59,7 +59,7 @@ declare namespace LocalJSX {
     }
 
     interface IntrinsicElements {
-        "ambulance-management-ambulance-crew-management": AmbulanceManagementAmbulanceCrewManagement;
+        "ambulance-management-ambulance-dispatch-management": AmbulanceManagementAmbulanceDispatchManagement;
         "ambulance-management-main-container": Omit<AmbulanceManagementMainContainer, keyof AmbulanceManagementMainContainerAttributes> & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes]?: AmbulanceManagementMainContainer[K] } & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes as `attr:${K}`]?: AmbulanceManagementMainContainerAttributes[K] } & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes as `prop:${K}`]?: AmbulanceManagementMainContainer[K] };
         "ambulance-management-paramedic-vehicle-management": AmbulanceManagementParamedicVehicleManagement;
     }
@@ -68,7 +68,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "ambulance-management-ambulance-crew-management": LocalJSX.IntrinsicElements["ambulance-management-ambulance-crew-management"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementAmbulanceCrewManagementElement>;
+            "ambulance-management-ambulance-dispatch-management": LocalJSX.IntrinsicElements["ambulance-management-ambulance-dispatch-management"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementAmbulanceDispatchManagementElement>;
             "ambulance-management-main-container": LocalJSX.IntrinsicElements["ambulance-management-main-container"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementMainContainerElement>;
             "ambulance-management-paramedic-vehicle-management": LocalJSX.IntrinsicElements["ambulance-management-paramedic-vehicle-management"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementParamedicVehicleManagementElement>;
         }
