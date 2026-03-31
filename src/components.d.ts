@@ -5,6 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { VehicleDraft, VehicleFormMode, VehicleRecord } from "./types/vehicle";
+export { VehicleDraft, VehicleFormMode, VehicleRecord } from "./types/vehicle";
 export namespace Components {
     interface AmbulanceManagementAmbulanceDispatchManagement {
     }
@@ -16,6 +18,37 @@ export namespace Components {
     }
     interface AmbulanceManagementParamedicVehicleManagement {
     }
+    interface AmbulanceManagementVehicleDeleteConfirmationModal {
+        /**
+          * @default null
+         */
+        "vehicle": VehicleRecord | null;
+    }
+    interface AmbulanceManagementVehicleDetailsModal {
+        /**
+          * @default null
+         */
+        "vehicle": VehicleRecord | null;
+    }
+    interface AmbulanceManagementVehicleFormModal {
+        "initialDraft": VehicleDraft;
+        /**
+          * @default 'create'
+         */
+        "mode": VehicleFormMode;
+    }
+}
+export interface AmbulanceManagementVehicleDeleteConfirmationModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAmbulanceManagementVehicleDeleteConfirmationModalElement;
+}
+export interface AmbulanceManagementVehicleDetailsModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAmbulanceManagementVehicleDetailsModalElement;
+}
+export interface AmbulanceManagementVehicleFormModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLAmbulanceManagementVehicleFormModalElement;
 }
 declare global {
     interface HTMLAmbulanceManagementAmbulanceDispatchManagementElement extends Components.AmbulanceManagementAmbulanceDispatchManagement, HTMLStencilElement {
@@ -36,10 +69,67 @@ declare global {
         prototype: HTMLAmbulanceManagementParamedicVehicleManagementElement;
         new (): HTMLAmbulanceManagementParamedicVehicleManagementElement;
     };
+    interface HTMLAmbulanceManagementVehicleDeleteConfirmationModalElementEventMap {
+        "closeRequest": void;
+        "confirmRequest": void;
+    }
+    interface HTMLAmbulanceManagementVehicleDeleteConfirmationModalElement extends Components.AmbulanceManagementVehicleDeleteConfirmationModal, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAmbulanceManagementVehicleDeleteConfirmationModalElementEventMap>(type: K, listener: (this: HTMLAmbulanceManagementVehicleDeleteConfirmationModalElement, ev: AmbulanceManagementVehicleDeleteConfirmationModalCustomEvent<HTMLAmbulanceManagementVehicleDeleteConfirmationModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAmbulanceManagementVehicleDeleteConfirmationModalElementEventMap>(type: K, listener: (this: HTMLAmbulanceManagementVehicleDeleteConfirmationModalElement, ev: AmbulanceManagementVehicleDeleteConfirmationModalCustomEvent<HTMLAmbulanceManagementVehicleDeleteConfirmationModalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLAmbulanceManagementVehicleDeleteConfirmationModalElement: {
+        prototype: HTMLAmbulanceManagementVehicleDeleteConfirmationModalElement;
+        new (): HTMLAmbulanceManagementVehicleDeleteConfirmationModalElement;
+    };
+    interface HTMLAmbulanceManagementVehicleDetailsModalElementEventMap {
+        "closeRequest": void;
+        "editRequest": void;
+    }
+    interface HTMLAmbulanceManagementVehicleDetailsModalElement extends Components.AmbulanceManagementVehicleDetailsModal, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAmbulanceManagementVehicleDetailsModalElementEventMap>(type: K, listener: (this: HTMLAmbulanceManagementVehicleDetailsModalElement, ev: AmbulanceManagementVehicleDetailsModalCustomEvent<HTMLAmbulanceManagementVehicleDetailsModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAmbulanceManagementVehicleDetailsModalElementEventMap>(type: K, listener: (this: HTMLAmbulanceManagementVehicleDetailsModalElement, ev: AmbulanceManagementVehicleDetailsModalCustomEvent<HTMLAmbulanceManagementVehicleDetailsModalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLAmbulanceManagementVehicleDetailsModalElement: {
+        prototype: HTMLAmbulanceManagementVehicleDetailsModalElement;
+        new (): HTMLAmbulanceManagementVehicleDetailsModalElement;
+    };
+    interface HTMLAmbulanceManagementVehicleFormModalElementEventMap {
+        "closeRequest": void;
+        "saveRequest": VehicleDraft;
+    }
+    interface HTMLAmbulanceManagementVehicleFormModalElement extends Components.AmbulanceManagementVehicleFormModal, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLAmbulanceManagementVehicleFormModalElementEventMap>(type: K, listener: (this: HTMLAmbulanceManagementVehicleFormModalElement, ev: AmbulanceManagementVehicleFormModalCustomEvent<HTMLAmbulanceManagementVehicleFormModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLAmbulanceManagementVehicleFormModalElementEventMap>(type: K, listener: (this: HTMLAmbulanceManagementVehicleFormModalElement, ev: AmbulanceManagementVehicleFormModalCustomEvent<HTMLAmbulanceManagementVehicleFormModalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLAmbulanceManagementVehicleFormModalElement: {
+        prototype: HTMLAmbulanceManagementVehicleFormModalElement;
+        new (): HTMLAmbulanceManagementVehicleFormModalElement;
+    };
     interface HTMLElementTagNameMap {
         "ambulance-management-ambulance-dispatch-management": HTMLAmbulanceManagementAmbulanceDispatchManagementElement;
         "ambulance-management-main-container": HTMLAmbulanceManagementMainContainerElement;
         "ambulance-management-paramedic-vehicle-management": HTMLAmbulanceManagementParamedicVehicleManagementElement;
+        "ambulance-management-vehicle-delete-confirmation-modal": HTMLAmbulanceManagementVehicleDeleteConfirmationModalElement;
+        "ambulance-management-vehicle-details-modal": HTMLAmbulanceManagementVehicleDetailsModalElement;
+        "ambulance-management-vehicle-form-modal": HTMLAmbulanceManagementVehicleFormModalElement;
     }
 }
 declare namespace LocalJSX {
@@ -53,15 +143,46 @@ declare namespace LocalJSX {
     }
     interface AmbulanceManagementParamedicVehicleManagement {
     }
+    interface AmbulanceManagementVehicleDeleteConfirmationModal {
+        "onCloseRequest"?: (event: AmbulanceManagementVehicleDeleteConfirmationModalCustomEvent<void>) => void;
+        "onConfirmRequest"?: (event: AmbulanceManagementVehicleDeleteConfirmationModalCustomEvent<void>) => void;
+        /**
+          * @default null
+         */
+        "vehicle"?: VehicleRecord | null;
+    }
+    interface AmbulanceManagementVehicleDetailsModal {
+        "onCloseRequest"?: (event: AmbulanceManagementVehicleDetailsModalCustomEvent<void>) => void;
+        "onEditRequest"?: (event: AmbulanceManagementVehicleDetailsModalCustomEvent<void>) => void;
+        /**
+          * @default null
+         */
+        "vehicle"?: VehicleRecord | null;
+    }
+    interface AmbulanceManagementVehicleFormModal {
+        "initialDraft": VehicleDraft;
+        /**
+          * @default 'create'
+         */
+        "mode"?: VehicleFormMode;
+        "onCloseRequest"?: (event: AmbulanceManagementVehicleFormModalCustomEvent<void>) => void;
+        "onSaveRequest"?: (event: AmbulanceManagementVehicleFormModalCustomEvent<VehicleDraft>) => void;
+    }
 
     interface AmbulanceManagementMainContainerAttributes {
         "basePath": string;
+    }
+    interface AmbulanceManagementVehicleFormModalAttributes {
+        "mode": VehicleFormMode;
     }
 
     interface IntrinsicElements {
         "ambulance-management-ambulance-dispatch-management": AmbulanceManagementAmbulanceDispatchManagement;
         "ambulance-management-main-container": Omit<AmbulanceManagementMainContainer, keyof AmbulanceManagementMainContainerAttributes> & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes]?: AmbulanceManagementMainContainer[K] } & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes as `attr:${K}`]?: AmbulanceManagementMainContainerAttributes[K] } & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes as `prop:${K}`]?: AmbulanceManagementMainContainer[K] };
         "ambulance-management-paramedic-vehicle-management": AmbulanceManagementParamedicVehicleManagement;
+        "ambulance-management-vehicle-delete-confirmation-modal": AmbulanceManagementVehicleDeleteConfirmationModal;
+        "ambulance-management-vehicle-details-modal": AmbulanceManagementVehicleDetailsModal;
+        "ambulance-management-vehicle-form-modal": Omit<AmbulanceManagementVehicleFormModal, keyof AmbulanceManagementVehicleFormModalAttributes> & { [K in keyof AmbulanceManagementVehicleFormModal & keyof AmbulanceManagementVehicleFormModalAttributes]?: AmbulanceManagementVehicleFormModal[K] } & { [K in keyof AmbulanceManagementVehicleFormModal & keyof AmbulanceManagementVehicleFormModalAttributes as `attr:${K}`]?: AmbulanceManagementVehicleFormModalAttributes[K] } & { [K in keyof AmbulanceManagementVehicleFormModal & keyof AmbulanceManagementVehicleFormModalAttributes as `prop:${K}`]?: AmbulanceManagementVehicleFormModal[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -71,6 +192,9 @@ declare module "@stencil/core" {
             "ambulance-management-ambulance-dispatch-management": LocalJSX.IntrinsicElements["ambulance-management-ambulance-dispatch-management"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementAmbulanceDispatchManagementElement>;
             "ambulance-management-main-container": LocalJSX.IntrinsicElements["ambulance-management-main-container"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementMainContainerElement>;
             "ambulance-management-paramedic-vehicle-management": LocalJSX.IntrinsicElements["ambulance-management-paramedic-vehicle-management"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementParamedicVehicleManagementElement>;
+            "ambulance-management-vehicle-delete-confirmation-modal": LocalJSX.IntrinsicElements["ambulance-management-vehicle-delete-confirmation-modal"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementVehicleDeleteConfirmationModalElement>;
+            "ambulance-management-vehicle-details-modal": LocalJSX.IntrinsicElements["ambulance-management-vehicle-details-modal"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementVehicleDetailsModalElement>;
+            "ambulance-management-vehicle-form-modal": LocalJSX.IntrinsicElements["ambulance-management-vehicle-form-modal"] & JSXBase.HTMLAttributes<HTMLAmbulanceManagementVehicleFormModalElement>;
         }
     }
 }

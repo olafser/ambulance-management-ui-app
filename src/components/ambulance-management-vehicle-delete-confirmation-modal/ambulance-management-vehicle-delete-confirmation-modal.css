@@ -1,0 +1,84 @@
+:host {
+  display: contents;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(7, 21, 30, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.confirm-shell {
+  width: min(100%, 28rem);
+  border-radius: 1.2rem;
+  background: #fff;
+  box-shadow: 0 28px 70px rgba(7, 21, 30, 0.28);
+}
+
+.confirm-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #2f6b8a;
+}
+
+h3,
+.description {
+  margin: 0;
+}
+
+h3 {
+  color: #0f2735;
+}
+
+.description {
+  color: #4f6b7a;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.secondary-button,
+.danger-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secondary-button {
+  color: #1c4258;
+  background: #e7f0f5;
+}
+
+.danger-button {
+  background: #b53a3a;
+  color: #fff;
+}
+
+.danger-button:hover,
+.danger-button:focus-visible {
+  background: #9d3434;
+  outline: none;
+}
