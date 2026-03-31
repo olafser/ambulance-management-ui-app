@@ -10,7 +10,7 @@ export namespace Components {
     }
     interface AmbulanceManagementMainContainer {
         /**
-          * @default '/'
+          * @default ''
          */
         "basePath": string;
     }
@@ -47,7 +47,7 @@ declare namespace LocalJSX {
     }
     interface AmbulanceManagementMainContainer {
         /**
-          * @default '/'
+          * @default ''
          */
         "basePath"?: string;
     }

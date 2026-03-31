@@ -8,17 +8,36 @@ declare global {
 
 type ActiveView = 'home' | 'paramedic-vehicle-management' | 'ambulance-crew-management';
 
+const MODULE_ROOT_SEGMENT = 'ambulance-management';
+const KNOWN_CHILD_ROUTES: ReadonlyArray<Exclude<ActiveView, 'home'>> = [
+  'paramedic-vehicle-management',
+  'ambulance-crew-management',
+];
+
+const normalizePath = (path: string) => (path !== '/' ? path.replace(/\/+$/, '') : '/');
+
 @Component({
   tag: 'ambulance-management-main-container',
   styleUrl: 'ambulance-management-main-container.css',
   shadow: true,
 })
 export class AmbulanceManagementMainContainer {
-  @Prop() basePath: string = '/';
+  @Prop() basePath: string = '';
 
   @State() private relativePath = '';
 
   private resolvedBasePath = '/';
+
+  private logNavigation(message: string, details: Record<string, unknown> = {}) {
+    console.info('[ambulance-management-main-container]', message, {
+      basePath: this.basePath,
+      documentBaseURI: document.baseURI,
+      locationPathname: location.pathname,
+      resolvedBasePath: this.resolvedBasePath,
+      relativePath: this.relativePath,
+      ...details,
+    });
+  }
 
   private readonly handleNavigate = (event: Event) => {
     const navigateEvent = event as any;
@@ -27,23 +46,65 @@ export class AmbulanceManagementMainContainer {
     }
 
     const path = new URL(navigateEvent.destination.url).pathname;
+    this.resolvedBasePath = this.resolveBasePath(path);
     this.syncRelativePath(path);
+    this.logNavigation('handled navigate event', {
+      destinationUrl: navigateEvent.destination?.url,
+      intercepted: navigateEvent.canIntercept ?? false,
+      syncedPath: path,
+    });
   };
 
   componentWillLoad() {
-    const baseUri = new URL(this.basePath || '/', document.baseURI || '/').pathname;
-    this.resolvedBasePath = baseUri !== '/' ? baseUri.replace(/\/+$/, '') : '/';
-
+    this.resolvedBasePath = this.resolveBasePath();
     window.navigation?.addEventListener('navigate', this.handleNavigate);
     this.syncRelativePath(location.pathname);
+    this.logNavigation('component will load');
   }
 
   disconnectedCallback() {
     window.navigation?.removeEventListener('navigate', this.handleNavigate);
   }
 
+  private resolveBasePath(pathname: string = location.pathname) {
+    const baseUri = new URL(this.basePath || '/', document.baseURI || '/').pathname;
+    const normalizedBasePath = normalizePath(baseUri);
+
+    if (normalizedBasePath !== '/') {
+      const inferredBasePath = this.inferBasePath(pathname);
+      if (inferredBasePath !== '/' && inferredBasePath.endsWith(normalizedBasePath)) {
+        return inferredBasePath;
+      }
+
+      return normalizedBasePath;
+    }
+
+    return this.inferBasePath(pathname);
+  }
+
+  private inferBasePath(pathname: string) {
+    const normalizedPath = normalizePath(pathname);
+    const pathSegments = normalizedPath.split('/').filter(Boolean);
+    const moduleRootIndex = pathSegments.indexOf(MODULE_ROOT_SEGMENT);
+
+    if (moduleRootIndex >= 0) {
+      return `/${pathSegments.slice(0, moduleRootIndex + 1).join('/')}`;
+    }
+
+    const childRoute = KNOWN_CHILD_ROUTES.find(
+      (route) => normalizedPath === `/${route}` || normalizedPath.endsWith(`/${route}`),
+    );
+
+    if (!childRoute) {
+      return '/';
+    }
+
+    const inferredBasePath = normalizedPath.slice(0, -(childRoute.length + 1));
+    return inferredBasePath || '/';
+  }
+
   private syncRelativePath(pathname: string) {
-    const normalizedPath = pathname !== '/' ? pathname.replace(/\/+$/, '') : '/';
+    const normalizedPath = normalizePath(pathname);
 
     if (this.resolvedBasePath === '/') {
       this.relativePath = normalizedPath === '/' ? '' : normalizedPath.replace(/^\/+/, '');
@@ -65,23 +126,29 @@ export class AmbulanceManagementMainContainer {
   }
 
   private navigate(path: string) {
-    const absolutePath = new URL(path, new URL(this.basePath || '/', document.baseURI)).pathname;
-
-    if (window.navigation?.navigate) {
-      window.navigation.navigate(absolutePath);
-      return;
-    }
-
+    this.resolvedBasePath = this.resolveBasePath(location.pathname);
+    const navigationBasePath = this.resolvedBasePath === '/' ? '/' : `${this.resolvedBasePath}/`;
+    const absolutePath = new URL(path, `${window.location.origin}${navigationBasePath}`).pathname;
     window.history.pushState({}, '', absolutePath);
+    const popStateEvent =
+      typeof PopStateEvent === 'function' ? new PopStateEvent('popstate') : new Event('popstate');
+    window.dispatchEvent(popStateEvent);
+    this.resolvedBasePath = this.resolveBasePath(absolutePath);
     this.syncRelativePath(absolutePath);
+    this.logNavigation('navigate requested', {
+      requestedPath: path,
+      navigationBasePath,
+      absolutePath,
+      navigationApiAvailable: Boolean(window.navigation?.navigate),
+    });
   }
 
   private get activeView(): ActiveView {
     switch (this.relativePath.replace(/^\/+/, '')) {
-      case 'paramedic-vehicle-management':
-        return 'paramedic-vehicle-management';
-      case 'ambulance-crew-management':
-        return 'ambulance-crew-management';
+      case KNOWN_CHILD_ROUTES[0]:
+        return KNOWN_CHILD_ROUTES[0];
+      case KNOWN_CHILD_ROUTES[1]:
+        return KNOWN_CHILD_ROUTES[1];
       default:
         return 'home';
     }
