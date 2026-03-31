@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { AmbulanceManagementAmbulanceCrewManagement } from '../../ambulance-management-ambulance-crew-management/ambulance-management-ambulance-crew-management';
+import { AmbulanceManagementAmbulanceDispatchManagement } from '../../ambulance-management-ambulance-dispatch-management/ambulance-management-ambulance-dispatch-management';
 import { AmbulanceManagementMainContainer } from '../ambulance-management-main-container';
 import { AmbulanceManagementParamedicVehicleManagement } from '../../ambulance-management-paramedic-vehicle-management/ambulance-management-paramedic-vehicle-management';
 
@@ -11,7 +11,7 @@ describe('ambulance-management-main-container', () => {
       components: [
         AmbulanceManagementMainContainer,
         AmbulanceManagementParamedicVehicleManagement,
-        AmbulanceManagementAmbulanceCrewManagement,
+        AmbulanceManagementAmbulanceDispatchManagement,
       ],
       html: '<ambulance-management-main-container base-path="/ambulance-management/"></ambulance-management-main-container>',
     });
@@ -25,7 +25,7 @@ describe('ambulance-management-main-container', () => {
       components: [
         AmbulanceManagementMainContainer,
         AmbulanceManagementParamedicVehicleManagement,
-        AmbulanceManagementAmbulanceCrewManagement,
+        AmbulanceManagementAmbulanceDispatchManagement,
       ],
       html: '<ambulance-management-main-container base-path="/ambulance-management/"></ambulance-management-main-container>',
     });
@@ -34,18 +34,18 @@ describe('ambulance-management-main-container', () => {
     expect(child).not.toBeNull();
   });
 
-  it('respects a nested base path for crew management', async () => {
+  it('respects a nested base path for dispatch management', async () => {
     const page = await newSpecPage({
-      url: 'http://localhost/ambulance-management/ambulance-crew-management',
+      url: 'http://localhost/ambulance-management/ambulance-dispatch-management',
       components: [
         AmbulanceManagementMainContainer,
         AmbulanceManagementParamedicVehicleManagement,
-        AmbulanceManagementAmbulanceCrewManagement,
+        AmbulanceManagementAmbulanceDispatchManagement,
       ],
       html: '<ambulance-management-main-container base-path="/ambulance-management/"></ambulance-management-main-container>',
     });
 
-    const child = page.root?.shadowRoot?.querySelector('ambulance-management-ambulance-crew-management');
+    const child = page.root?.shadowRoot?.querySelector('ambulance-management-ambulance-dispatch-management');
     expect(child).not.toBeNull();
   });
 
@@ -55,7 +55,7 @@ describe('ambulance-management-main-container', () => {
       components: [
         AmbulanceManagementMainContainer,
         AmbulanceManagementParamedicVehicleManagement,
-        AmbulanceManagementAmbulanceCrewManagement,
+        AmbulanceManagementAmbulanceDispatchManagement,
       ],
       html: '<ambulance-management-main-container></ambulance-management-main-container>',
     });
@@ -71,16 +71,16 @@ describe('ambulance-management-main-container', () => {
       components: [
         AmbulanceManagementMainContainer,
         AmbulanceManagementParamedicVehicleManagement,
-        AmbulanceManagementAmbulanceCrewManagement,
+        AmbulanceManagementAmbulanceDispatchManagement,
       ],
       html: '<ambulance-management-main-container></ambulance-management-main-container>',
     });
 
     const pushStateSpy = jest.spyOn(window.history, 'pushState');
 
-    (page.rootInstance as any).navigate('./ambulance-crew-management');
+    (page.rootInstance as any).navigate('./ambulance-dispatch-management');
 
-    expect(pushStateSpy).toHaveBeenCalledWith({}, '', '/fea/ambulance-management/ambulance-crew-management');
+    expect(pushStateSpy).toHaveBeenCalledWith({}, '', '/fea/ambulance-management/ambulance-dispatch-management');
   });
 
   it('keeps the host route prefix when base-path points to the module root', async () => {
@@ -89,7 +89,7 @@ describe('ambulance-management-main-container', () => {
       components: [
         AmbulanceManagementMainContainer,
         AmbulanceManagementParamedicVehicleManagement,
-        AmbulanceManagementAmbulanceCrewManagement,
+        AmbulanceManagementAmbulanceDispatchManagement,
       ],
       html: '<ambulance-management-main-container base-path="/ambulance-management/"></ambulance-management-main-container>',
     });

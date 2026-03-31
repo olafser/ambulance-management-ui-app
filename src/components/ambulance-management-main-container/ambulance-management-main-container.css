@@ -102,18 +102,3 @@
   color: #426174;
 }
 
-@media (max-width: 640px) {
-  .shell {
-    padding: 0 1rem 1rem;
-  }
-
-  .navigation {
-    padding: 0.85rem 0;
-  }
-
-  .nav-center {
-    gap: 1rem;
-    padding-left: 0;
-    padding-right: 0;
-  }
-}

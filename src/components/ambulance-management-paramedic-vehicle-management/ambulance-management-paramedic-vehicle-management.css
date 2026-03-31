@@ -1,22 +1,32 @@
 :host {
   display: block;
   width: 100%;
+  color: #173042;
 }
 
 .page {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1.5rem;
   width: 100%;
   padding: 1.5rem;
   border-radius: 1.5rem;
-  background: rgba(255, 255, 255, 0.88);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(240, 247, 251, 0.92)),
+    radial-gradient(circle at top right, rgba(49, 130, 206, 0.08), transparent 40%);
   box-shadow: 0 24px 60px rgba(20, 48, 66, 0.08);
   box-sizing: border-box;
 }
 
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
 .label {
-  margin: 0;
+  margin: 0 0 0.35rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.75rem;
@@ -25,6 +35,161 @@
 }
 
 h2,
-p {
+.description {
   margin: 0;
+}
+
+h2 {
+  color: #0f2735;
+}
+
+.description {
+  margin-top: 0.45rem;
+  max-width: 44rem;
+  color: #4f6b7a;
+  line-height: 1.5;
+}
+
+.primary-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
+}
+
+.primary-button {
+  color: #fff;
+  background: #0d7ea2;
+  box-shadow: none;
+}
+
+.primary-button:hover,
+.vehicle-row:hover {
+  transform: translateY(-1px);
+}
+
+.primary-button:hover,
+.primary-button:focus-visible {
+  background: #0b6f8f;
+}
+
+.table-card {
+  overflow: auto;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(34, 72, 95, 0.1);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.vehicle-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.vehicle-table th,
+.vehicle-table td {
+  padding: 1rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(34, 72, 95, 0.08);
+}
+
+.vehicle-table th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #5d7988;
+  background: rgba(241, 247, 250, 0.95);
+}
+
+.vehicle-row {
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.vehicle-row:hover,
+.vehicle-row:focus-visible {
+  background: rgba(18, 123, 170, 0.08);
+  outline: none;
+}
+
+.actions-column,
+.delete-cell {
+  width: 4.5rem;
+  text-align: right;
+}
+
+.delete-cell {
+  padding-right: 0.85rem;
+}
+
+.delete-button {
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem;
+  border: 1px solid #d6a5a5;
+  border-radius: 0.55rem;
+  background: transparent;
+  color: #9d3434;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.delete-icon {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 1.6rem;
+  line-height: 1;
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+}
+
+.delete-button:hover,
+.delete-button:focus-visible {
+  color: #7f2626;
+  border-color: #b97878;
+  outline: none;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.status-available {
+  color: #0d6a4d;
+  background: #daf5ea;
+}
+
+.status-on-mission {
+  color: #965700;
+  background: #fff0d1;
+}
+
+.status-maintenance {
+  color: #8b2d2d;
+  background: #fde2e2;
+}
+
+.status-reserved {
+  color: #4d3b96;
+  background: #ebe3ff;
 }

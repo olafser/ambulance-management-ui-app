@@ -6,12 +6,12 @@ declare global {
   }
 }
 
-type ActiveView = 'home' | 'paramedic-vehicle-management' | 'ambulance-crew-management';
+type ActiveView = 'home' | 'paramedic-vehicle-management' | 'ambulance-dispatch-management';
 
 const MODULE_ROOT_SEGMENT = 'ambulance-management';
 const KNOWN_CHILD_ROUTES: ReadonlyArray<Exclude<ActiveView, 'home'>> = [
   'paramedic-vehicle-management',
-  'ambulance-crew-management',
+  'ambulance-dispatch-management',
 ];
 
 const normalizePath = (path: string) => (path !== '/' ? path.replace(/\/+$/, '') : '/');
@@ -177,8 +177,8 @@ export class AmbulanceManagementMainContainer {
     switch (this.activeView) {
       case 'paramedic-vehicle-management':
         return <ambulance-management-paramedic-vehicle-management></ambulance-management-paramedic-vehicle-management>;
-      case 'ambulance-crew-management':
-        return <ambulance-management-ambulance-crew-management></ambulance-management-ambulance-crew-management>;
+      case 'ambulance-dispatch-management':
+        return <ambulance-management-ambulance-dispatch-management></ambulance-management-ambulance-dispatch-management>;
       default:
         return (
           <section class="overview">
@@ -202,9 +202,9 @@ export class AmbulanceManagementMainContainer {
                 'paramedic-vehicle-management',
               )}
               {this.renderNavigationButton(
-                'Ambulance Crew Management',
-                './ambulance-crew-management',
-                'ambulance-crew-management',
+                'Ambulance Dispatch Management',
+                './ambulance-dispatch-management',
+                'ambulance-dispatch-management',
               )}
             </div>
           </nav>
