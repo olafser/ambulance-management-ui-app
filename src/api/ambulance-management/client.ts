@@ -10,7 +10,7 @@ import {
 } from './index';
 
 import type { VehicleDraft, VehicleRecord } from '../../types/vehicle';
-
+// change basePath to     basePath: 'http://localhost:8080/api' for development
 const api = new AmbulanceManagementApi(
   new Configuration({
     basePath: '/api',
@@ -87,7 +87,7 @@ export const getApiErrorMessage = async (error: unknown, fallbackMessage: string
   }
 
   if (error instanceof FetchError) {
-    return 'Unable to reach the ambulance management API. Check that the backend is running under /api.';
+    return 'Unable to reach the ambulance management API. Check that the backend is running at http://localhost:8080/api.';
   }
 
   if (error instanceof Error && error.message.trim()) {
