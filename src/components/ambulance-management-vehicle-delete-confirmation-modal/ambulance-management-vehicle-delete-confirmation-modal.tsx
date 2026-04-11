@@ -9,6 +9,8 @@ import type { VehicleRecord } from '../../types/vehicle';
 })
 export class AmbulanceManagementVehicleDeleteConfirmationModal {
   @Prop() vehicle: VehicleRecord | null = null;
+  @Prop() errorMessage = '';
+  @Prop() isDeleting = false;
 
   @Event() closeRequest: EventEmitter<void>;
   @Event() confirmRequest: EventEmitter<void>;
@@ -34,12 +36,17 @@ export class AmbulanceManagementVehicleDeleteConfirmationModal {
               <p class="description">
                 Delete vehicle <strong>{this.vehicle.callSign}</strong>. This action cannot be undone.
               </p>
+              {this.errorMessage ? (
+                <div class="feedback-banner" role="alert">
+                  {this.errorMessage}
+                </div>
+              ) : null}
               <div class="modal-actions">
-                <button class="secondary-button" type="button" onClick={() => this.closeRequest.emit()}>
+                <button class="secondary-button" type="button" disabled={this.isDeleting} onClick={() => this.closeRequest.emit()}>
                   Cancel
                 </button>
-                <button class="danger-button" type="button" onClick={() => this.confirmRequest.emit()}>
-                  Delete
+                <button class="danger-button" type="button" disabled={this.isDeleting} onClick={() => this.confirmRequest.emit()}>
+                  {this.isDeleting ? 'Deleting...' : 'Delete'}
                 </button>
               </div>
             </div>

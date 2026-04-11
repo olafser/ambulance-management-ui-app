@@ -1,6 +1,7 @@
 import { Component, Host, State, h } from '@stencil/core';
 
-import type { VehicleDraft, VehicleFormMode, VehicleRecord, VehicleStatus } from '../../types/vehicle';
+import { VEHICLE_STATUS_LABELS, type VehicleDraft, type VehicleFormMode, type VehicleRecord, type VehicleStatus } from '../../types/vehicle';
+import { createVehicle, deleteVehicle, getApiErrorMessage, listVehicles, updateVehicle } from '../../api/ambulance-management/client';
 
 const DEFAULT_DRAFT: VehicleDraft = {
   callSign: '',
@@ -8,7 +9,7 @@ const DEFAULT_DRAFT: VehicleDraft = {
   plateNumber: '',
   station: '',
   assignedCrew: '',
-  status: 'Available',
+  status: 'AVAILABLE',
   mileageKm: '',
   lastServiceDate: '',
   notes: '',
@@ -20,59 +21,48 @@ const DEFAULT_DRAFT: VehicleDraft = {
   shadow: true,
 })
 export class AmbulanceManagementParamedicVehicleManagement {
-  @State() private vehicles: VehicleRecord[] = [
-    {
-      id: 1,
-      callSign: 'AMB-201',
-      vehicleType: 'Rapid response van',
-      plateNumber: 'BA-482KT',
-      station: 'Bratislava Center',
-      assignedCrew: 'Novak / Simko',
-      status: 'Available',
-      mileageKm: 48620,
-      lastServiceDate: '2026-02-12',
-      notes: 'Fully stocked and ready for deployment.',
-    },
-    {
-      id: 2,
-      callSign: 'AMB-315',
-      vehicleType: 'Type C ambulance',
-      plateNumber: 'TT-194LM',
-      station: 'Trnava North',
-      assignedCrew: 'Kovac / Balaz',
-      status: 'On mission',
-      mileageKm: 72110,
-      lastServiceDate: '2026-01-28',
-      notes: 'Assigned to inter-hospital transfer rotation.',
-    },
-    {
-      id: 3,
-      callSign: 'AMB-118',
-      vehicleType: 'Type B ambulance',
-      plateNumber: 'NR-551DP',
-      station: 'Nitra South',
-      assignedCrew: 'Unassigned',
-      status: 'Maintenance',
-      mileageKm: 103440,
-      lastServiceDate: '2026-03-05',
-      notes: 'Brake inspection scheduled for next shift.',
-    },
-  ];
+  @State() private vehicles: VehicleRecord[] = [];
+  @State() private isLoading = true;
+  @State() private loadError = '';
+  @State() private mutationError = '';
+  @State() private deleteError = '';
+  @State() private isSaving = false;
+  @State() private isDeleting = false;
 
   @State() private isModalOpen = false;
   @State() private modalMode: 'view' | VehicleFormMode = 'view';
   @State() private selectedVehicleId: number | null = null;
   @State() private vehiclePendingDeletion: VehicleRecord | null = null;
 
-  private nextVehicleId = 4;
-
   private get selectedVehicle() {
     return this.vehicles.find((vehicle) => vehicle.id === this.selectedVehicleId) ?? null;
+  }
+
+  async componentWillLoad() {
+    await this.loadVehicles();
+  }
+
+  private async loadVehicles() {
+    this.isLoading = true;
+    this.loadError = '';
+
+    try {
+      this.vehicles = await listVehicles();
+
+      if (this.selectedVehicleId !== null && !this.vehicles.some((vehicle) => vehicle.id === this.selectedVehicleId)) {
+        this.closeModal();
+      }
+    } catch (error) {
+      this.loadError = await getApiErrorMessage(error, 'Unable to load vehicles.');
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   private openCreateModal() {
     this.modalMode = 'create';
     this.selectedVehicleId = null;
+    this.mutationError = '';
     this.isModalOpen = true;
   }
 
@@ -84,6 +74,7 @@ export class AmbulanceManagementParamedicVehicleManagement {
 
     this.selectedVehicleId = vehicleId;
     this.modalMode = 'view';
+    this.mutationError = '';
     this.isModalOpen = true;
   }
 
@@ -91,14 +82,17 @@ export class AmbulanceManagementParamedicVehicleManagement {
     this.isModalOpen = false;
     this.modalMode = 'view';
     this.selectedVehicleId = null;
+    this.mutationError = '';
   }
 
   private openDeleteConfirmation(vehicleId: number) {
     const vehicle = this.vehicles.find((item) => item.id === vehicleId) ?? null;
+    this.deleteError = '';
     this.vehiclePendingDeletion = vehicle;
   }
 
   private closeDeleteConfirmation() {
+    this.deleteError = '';
     this.vehiclePendingDeletion = null;
   }
 
@@ -107,6 +101,7 @@ export class AmbulanceManagementParamedicVehicleManagement {
       return;
     }
 
+    this.mutationError = '';
     this.modalMode = 'edit';
   }
 
@@ -124,51 +119,87 @@ export class AmbulanceManagementParamedicVehicleManagement {
     };
   }
 
-  private saveVehicle(draft: VehicleDraft) {
-    const normalizedVehicle: VehicleRecord = {
-      id: this.selectedVehicleId ?? this.nextVehicleId++,
-      callSign: draft.callSign.trim(),
-      vehicleType: draft.vehicleType.trim(),
-      plateNumber: draft.plateNumber.trim(),
-      station: draft.station.trim(),
-      assignedCrew: draft.assignedCrew.trim() || 'Unassigned',
-      status: draft.status,
-      mileageKm: Number(draft.mileageKm) || 0,
-      lastServiceDate: draft.lastServiceDate,
-      notes: draft.notes.trim(),
-    };
-
-    if (this.modalMode === 'create') {
-      this.vehicles = [normalizedVehicle, ...this.vehicles];
-    } else {
-      this.vehicles = this.vehicles.map((vehicle) =>
-        vehicle.id === normalizedVehicle.id ? normalizedVehicle : vehicle,
-      );
-    }
-
-    this.selectedVehicleId = normalizedVehicle.id;
-    this.modalMode = 'view';
-  }
-
-  private confirmDeleteVehicle() {
-    if (!this.vehiclePendingDeletion) {
+  private async saveVehicle(draft: VehicleDraft) {
+    if (this.isSaving) {
       return;
     }
 
-    this.vehicles = this.vehicles.filter((vehicle) => vehicle.id !== this.vehiclePendingDeletion?.id);
+    this.isSaving = true;
+    this.mutationError = '';
 
-    if (this.selectedVehicleId === this.vehiclePendingDeletion.id) {
-      this.closeModal();
+    try {
+      const savedVehicle =
+        this.modalMode === 'create'
+          ? await createVehicle(draft)
+          : await updateVehicle(this.selectedVehicleId as number, draft);
+
+      if (this.modalMode === 'create') {
+        this.vehicles = [savedVehicle, ...this.vehicles];
+      } else {
+        this.vehicles = this.vehicles.map((vehicle) => (vehicle.id === savedVehicle.id ? savedVehicle : vehicle));
+      }
+
+      this.selectedVehicleId = savedVehicle.id;
+      this.modalMode = 'view';
+    } catch (error) {
+      this.mutationError = await getApiErrorMessage(error, 'Unable to save vehicle.');
+    } finally {
+      this.isSaving = false;
+    }
+  }
+
+  private async confirmDeleteVehicle() {
+    if (!this.vehiclePendingDeletion || this.isDeleting) {
+      return;
     }
 
-    this.vehiclePendingDeletion = null;
+    this.isDeleting = true;
+    this.deleteError = '';
+
+    try {
+      await deleteVehicle(this.vehiclePendingDeletion.id);
+      this.vehicles = this.vehicles.filter((vehicle) => vehicle.id !== this.vehiclePendingDeletion?.id);
+
+      if (this.selectedVehicleId === this.vehiclePendingDeletion.id) {
+        this.closeModal();
+      }
+
+      this.vehiclePendingDeletion = null;
+    } catch (error) {
+      this.deleteError = await getApiErrorMessage(error, 'Unable to delete vehicle.');
+    } finally {
+      this.isDeleting = false;
+    }
   }
 
   private renderBadge(status: VehicleStatus) {
-    return <span class={{ badge: true, [`status-${status.toLowerCase().replace(/\s+/g, '-')}`]: true }}>{status}</span>;
+    return <span class={{ badge: true, [`status-${status.toLowerCase().replace(/_/g, '-')}`]: true }}>{VEHICLE_STATUS_LABELS[status]}</span>;
   }
 
   private renderVehicleTable() {
+    if (this.isLoading) {
+      return (
+        <div class="status-card" role="status">
+          Loading vehicles from the API...
+        </div>
+      );
+    }
+
+    if (this.loadError && this.vehicles.length === 0) {
+      return (
+        <div class="status-card error-state" role="alert">
+          <p>{this.loadError}</p>
+          <button class="secondary-button retry-button" type="button" onClick={() => this.loadVehicles()}>
+            Retry
+          </button>
+        </div>
+      );
+    }
+
+    if (this.vehicles.length === 0) {
+      return <div class="status-card">No vehicles were returned by the API.</div>;
+    }
+
     return (
       <div class="table-card">
         <table class="vehicle-table">
@@ -246,6 +277,8 @@ export class AmbulanceManagementParamedicVehicleManagement {
       <ambulance-management-vehicle-form-modal
         mode={formMode}
         initialDraft={formMode === 'edit' && this.selectedVehicle ? this.toDraft(this.selectedVehicle) : { ...DEFAULT_DRAFT }}
+        errorMessage={this.mutationError}
+        isSubmitting={this.isSaving}
         onCloseRequest={() => this.closeModal()}
         onSaveRequest={(event) => this.saveVehicle(event.detail)}
       ></ambulance-management-vehicle-form-modal>
@@ -256,6 +289,8 @@ export class AmbulanceManagementParamedicVehicleManagement {
     return (
       <ambulance-management-vehicle-delete-confirmation-modal
         vehicle={this.vehiclePendingDeletion}
+        errorMessage={this.deleteError}
+        isDeleting={this.isDeleting}
         onCloseRequest={() => this.closeDeleteConfirmation()}
         onConfirmRequest={() => this.confirmDeleteVehicle()}
       ></ambulance-management-vehicle-delete-confirmation-modal>
@@ -272,10 +307,19 @@ export class AmbulanceManagementParamedicVehicleManagement {
               <h2>Paramedic Vehicle Management</h2>
               <p class="description">Track vehicles, inspect details, and update operational data from one place.</p>
             </div>
-            <button class="primary-button" type="button" onClick={() => this.openCreateModal()}>
+            <button class="primary-button" type="button" disabled={this.isLoading} onClick={() => this.openCreateModal()}>
               Add new vehicle
             </button>
           </div>
+
+          {this.loadError && this.vehicles.length > 0 ? (
+            <div class="feedback-banner" role="alert">
+              <span>{this.loadError}</span>
+              <button class="secondary-button retry-button" type="button" onClick={() => this.loadVehicles()}>
+                Retry
+              </button>
+            </div>
+          ) : null}
 
           {this.renderVehicleTable()}
           {this.renderModal()}
