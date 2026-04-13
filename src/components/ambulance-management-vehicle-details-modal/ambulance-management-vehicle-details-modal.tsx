@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
 
-import type { VehicleRecord } from '../../types/vehicle';
+import { VEHICLE_STATUS_LABELS, type VehicleRecord } from '../../types/vehicle';
 
 @Component({
   tag: 'ambulance-management-vehicle-details-modal',
@@ -23,7 +23,7 @@ export class AmbulanceManagementVehicleDetailsModal {
   }
 
   private renderBadge(status: VehicleRecord['status']) {
-    return <span class={{ badge: true, [`status-${status.toLowerCase().replace(/\s+/g, '-')}`]: true }}>{status}</span>;
+    return <span class={{ badge: true, [`status-${status.toLowerCase().replace(/_/g, '-')}`]: true }}>{VEHICLE_STATUS_LABELS[status]}</span>;
   }
 
   render() {

@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import type { VehicleDraft, VehicleFormMode, VehicleStatus } from '../../types/vehicle';
+import { VEHICLE_STATUS_LABELS, type VehicleDraft, type VehicleFormMode, type VehicleStatus } from '../../types/vehicle';
 
 @Component({
   tag: 'ambulance-management-vehicle-form-modal',
@@ -10,6 +10,8 @@ import type { VehicleDraft, VehicleFormMode, VehicleStatus } from '../../types/v
 export class AmbulanceManagementVehicleFormModal {
   @Prop() mode: VehicleFormMode = 'create';
   @Prop() initialDraft!: VehicleDraft;
+  @Prop() errorMessage = '';
+  @Prop() isSubmitting = false;
 
   @State() private draft: VehicleDraft = {
     callSign: '',
@@ -17,7 +19,7 @@ export class AmbulanceManagementVehicleFormModal {
     plateNumber: '',
     station: '',
     assignedCrew: '',
-    status: 'Available',
+    status: 'AVAILABLE',
     mileageKm: '',
     lastServiceDate: '',
     notes: '',
@@ -67,6 +69,12 @@ export class AmbulanceManagementVehicleFormModal {
               </div>
 
               <div class="form-body">
+                {this.errorMessage ? (
+                  <div class="feedback-banner" role="alert">
+                    {this.errorMessage}
+                  </div>
+                ) : null}
+
                 <div class="form-grid">
                   <label>
                     <span>ID</span>
@@ -114,17 +122,17 @@ export class AmbulanceManagementVehicleFormModal {
                         this.updateDraft('status', (event.target as HTMLSelectElement).value as VehicleStatus)
                       }
                     >
-                      <option value="Available" selected={this.draft.status === 'Available'}>
-                        Available
+                      <option value="AVAILABLE" selected={this.draft.status === 'AVAILABLE'}>
+                        {VEHICLE_STATUS_LABELS.AVAILABLE}
                       </option>
-                      <option value="On mission" selected={this.draft.status === 'On mission'}>
-                        On mission
+                      <option value="ON_MISSION" selected={this.draft.status === 'ON_MISSION'}>
+                        {VEHICLE_STATUS_LABELS.ON_MISSION}
                       </option>
-                      <option value="Maintenance" selected={this.draft.status === 'Maintenance'}>
-                        Maintenance
+                      <option value="OUT_OF_SERVICE" selected={this.draft.status === 'OUT_OF_SERVICE'}>
+                        {VEHICLE_STATUS_LABELS.OUT_OF_SERVICE}
                       </option>
-                      <option value="Reserved" selected={this.draft.status === 'Reserved'}>
-                        Reserved
+                      <option value="IN_SERVICE" selected={this.draft.status === 'IN_SERVICE'}>
+                        {VEHICLE_STATUS_LABELS.IN_SERVICE}
                       </option>
                     </select>
                   </label>
@@ -159,11 +167,11 @@ export class AmbulanceManagementVehicleFormModal {
               </div>
 
               <div class="modal-actions">
-                <button class="secondary-button" type="button" onClick={() => this.closeRequest.emit()}>
+                <button class="secondary-button" type="button" disabled={this.isSubmitting} onClick={() => this.closeRequest.emit()}>
                   Cancel
                 </button>
-                <button class="primary-button" type="submit">
-                  Save
+                <button class="primary-button" type="submit" disabled={this.isSubmitting}>
+                  {this.isSubmitting ? 'Saving...' : 'Save'}
                 </button>
               </div>
             </form>

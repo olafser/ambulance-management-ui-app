@@ -20,6 +20,14 @@ export namespace Components {
     }
     interface AmbulanceManagementVehicleDeleteConfirmationModal {
         /**
+          * @default ''
+         */
+        "errorMessage": string;
+        /**
+          * @default false
+         */
+        "isDeleting": boolean;
+        /**
           * @default null
          */
         "vehicle": VehicleRecord | null;
@@ -31,7 +39,15 @@ export namespace Components {
         "vehicle": VehicleRecord | null;
     }
     interface AmbulanceManagementVehicleFormModal {
+        /**
+          * @default ''
+         */
+        "errorMessage": string;
         "initialDraft": VehicleDraft;
+        /**
+          * @default false
+         */
+        "isSubmitting": boolean;
         /**
           * @default 'create'
          */
@@ -144,6 +160,14 @@ declare namespace LocalJSX {
     interface AmbulanceManagementParamedicVehicleManagement {
     }
     interface AmbulanceManagementVehicleDeleteConfirmationModal {
+        /**
+          * @default ''
+         */
+        "errorMessage"?: string;
+        /**
+          * @default false
+         */
+        "isDeleting"?: boolean;
         "onCloseRequest"?: (event: AmbulanceManagementVehicleDeleteConfirmationModalCustomEvent<void>) => void;
         "onConfirmRequest"?: (event: AmbulanceManagementVehicleDeleteConfirmationModalCustomEvent<void>) => void;
         /**
@@ -160,7 +184,15 @@ declare namespace LocalJSX {
         "vehicle"?: VehicleRecord | null;
     }
     interface AmbulanceManagementVehicleFormModal {
+        /**
+          * @default ''
+         */
+        "errorMessage"?: string;
         "initialDraft": VehicleDraft;
+        /**
+          * @default false
+         */
+        "isSubmitting"?: boolean;
         /**
           * @default 'create'
          */
@@ -172,15 +204,21 @@ declare namespace LocalJSX {
     interface AmbulanceManagementMainContainerAttributes {
         "basePath": string;
     }
+    interface AmbulanceManagementVehicleDeleteConfirmationModalAttributes {
+        "errorMessage": string;
+        "isDeleting": boolean;
+    }
     interface AmbulanceManagementVehicleFormModalAttributes {
         "mode": VehicleFormMode;
+        "errorMessage": string;
+        "isSubmitting": boolean;
     }
 
     interface IntrinsicElements {
         "ambulance-management-ambulance-dispatch-management": AmbulanceManagementAmbulanceDispatchManagement;
         "ambulance-management-main-container": Omit<AmbulanceManagementMainContainer, keyof AmbulanceManagementMainContainerAttributes> & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes]?: AmbulanceManagementMainContainer[K] } & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes as `attr:${K}`]?: AmbulanceManagementMainContainerAttributes[K] } & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes as `prop:${K}`]?: AmbulanceManagementMainContainer[K] };
         "ambulance-management-paramedic-vehicle-management": AmbulanceManagementParamedicVehicleManagement;
-        "ambulance-management-vehicle-delete-confirmation-modal": AmbulanceManagementVehicleDeleteConfirmationModal;
+        "ambulance-management-vehicle-delete-confirmation-modal": Omit<AmbulanceManagementVehicleDeleteConfirmationModal, keyof AmbulanceManagementVehicleDeleteConfirmationModalAttributes> & { [K in keyof AmbulanceManagementVehicleDeleteConfirmationModal & keyof AmbulanceManagementVehicleDeleteConfirmationModalAttributes]?: AmbulanceManagementVehicleDeleteConfirmationModal[K] } & { [K in keyof AmbulanceManagementVehicleDeleteConfirmationModal & keyof AmbulanceManagementVehicleDeleteConfirmationModalAttributes as `attr:${K}`]?: AmbulanceManagementVehicleDeleteConfirmationModalAttributes[K] } & { [K in keyof AmbulanceManagementVehicleDeleteConfirmationModal & keyof AmbulanceManagementVehicleDeleteConfirmationModalAttributes as `prop:${K}`]?: AmbulanceManagementVehicleDeleteConfirmationModal[K] };
         "ambulance-management-vehicle-details-modal": AmbulanceManagementVehicleDetailsModal;
         "ambulance-management-vehicle-form-modal": Omit<AmbulanceManagementVehicleFormModal, keyof AmbulanceManagementVehicleFormModalAttributes> & { [K in keyof AmbulanceManagementVehicleFormModal & keyof AmbulanceManagementVehicleFormModalAttributes]?: AmbulanceManagementVehicleFormModal[K] } & { [K in keyof AmbulanceManagementVehicleFormModal & keyof AmbulanceManagementVehicleFormModalAttributes as `attr:${K}`]?: AmbulanceManagementVehicleFormModalAttributes[K] } & { [K in keyof AmbulanceManagementVehicleFormModal & keyof AmbulanceManagementVehicleFormModalAttributes as `prop:${K}`]?: AmbulanceManagementVehicleFormModal[K] };
     }
