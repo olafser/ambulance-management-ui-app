@@ -245,9 +245,9 @@ export class AmbulanceManagementParamedicVehicleManagement {
                       this.openDeleteConfirmation(vehicle.id);
                     }}
                   >
-                    <span class="delete-icon" aria-hidden="true">
+                    <md-icon class="delete-icon" aria-hidden="true">
                       delete
-                    </span>
+                    </md-icon>
                   </button>
                 </td>
               </tr>

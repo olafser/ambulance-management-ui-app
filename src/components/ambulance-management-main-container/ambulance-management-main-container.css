@@ -1,4 +1,5 @@
 :host {
+  --md-icon-font: 'Material Symbols Outlined Variable';
   display: flex;
   justify-content: center;
   align-items: stretch;

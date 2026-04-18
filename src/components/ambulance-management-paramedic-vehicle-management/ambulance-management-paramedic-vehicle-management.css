@@ -185,16 +185,8 @@ h2 {
 }
 
 .delete-icon {
-  font-family: 'Material Symbols Outlined', sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.35rem;
   line-height: 1;
-  font-weight: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-transform: none;
-  white-space: nowrap;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
 }
 
 .delete-button:hover,
