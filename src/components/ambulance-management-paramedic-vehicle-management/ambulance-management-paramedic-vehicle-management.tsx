@@ -1,4 +1,4 @@
-import { Component, Host, State, h } from '@stencil/core';
+import { Component, Host, Prop, State, h } from '@stencil/core';
 
 import { VEHICLE_STATUS_LABELS, type VehicleDraft, type VehicleFormMode, type VehicleRecord, type VehicleStatus } from '../../types/vehicle';
 import { createVehicle, deleteVehicle, getApiErrorMessage, listVehicles, updateVehicle } from '../../api/ambulance-management/client';
@@ -21,6 +21,8 @@ const DEFAULT_DRAFT: VehicleDraft = {
   shadow: true,
 })
 export class AmbulanceManagementParamedicVehicleManagement {
+  @Prop() apiBase: string = '';
+
   @State() private vehicles: VehicleRecord[] = [];
   @State() private isLoading = true;
   @State() private loadError = '';
@@ -47,7 +49,7 @@ export class AmbulanceManagementParamedicVehicleManagement {
     this.loadError = '';
 
     try {
-      this.vehicles = await listVehicles();
+      this.vehicles = await listVehicles(this.apiBase);
 
       if (this.selectedVehicleId !== null && !this.vehicles.some((vehicle) => vehicle.id === this.selectedVehicleId)) {
         this.closeModal();
@@ -130,8 +132,8 @@ export class AmbulanceManagementParamedicVehicleManagement {
     try {
       const savedVehicle =
         this.modalMode === 'create'
-          ? await createVehicle(draft)
-          : await updateVehicle(this.selectedVehicleId as number, draft);
+          ? await createVehicle(draft, this.apiBase)
+          : await updateVehicle(this.selectedVehicleId as number, draft, this.apiBase);
 
       if (this.modalMode === 'create') {
         this.vehicles = [savedVehicle, ...this.vehicles];
@@ -157,7 +159,7 @@ export class AmbulanceManagementParamedicVehicleManagement {
     this.deleteError = '';
 
     try {
-      await deleteVehicle(this.vehiclePendingDeletion.id);
+      await deleteVehicle(this.vehiclePendingDeletion.id, this.apiBase);
       this.vehicles = this.vehicles.filter((vehicle) => vehicle.id !== this.vehiclePendingDeletion?.id);
 
       if (this.selectedVehicleId === this.vehiclePendingDeletion.id) {

@@ -14,9 +14,17 @@ export namespace Components {
         /**
           * @default ''
          */
+        "apiBase": string;
+        /**
+          * @default ''
+         */
         "basePath": string;
     }
     interface AmbulanceManagementParamedicVehicleManagement {
+        /**
+          * @default ''
+         */
+        "apiBase": string;
     }
     interface AmbulanceManagementVehicleDeleteConfirmationModal {
         /**
@@ -155,9 +163,17 @@ declare namespace LocalJSX {
         /**
           * @default ''
          */
+        "apiBase"?: string;
+        /**
+          * @default ''
+         */
         "basePath"?: string;
     }
     interface AmbulanceManagementParamedicVehicleManagement {
+        /**
+          * @default ''
+         */
+        "apiBase"?: string;
     }
     interface AmbulanceManagementVehicleDeleteConfirmationModal {
         /**
@@ -203,6 +219,10 @@ declare namespace LocalJSX {
 
     interface AmbulanceManagementMainContainerAttributes {
         "basePath": string;
+        "apiBase": string;
+    }
+    interface AmbulanceManagementParamedicVehicleManagementAttributes {
+        "apiBase": string;
     }
     interface AmbulanceManagementVehicleDeleteConfirmationModalAttributes {
         "errorMessage": string;
@@ -217,7 +237,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "ambulance-management-ambulance-dispatch-management": AmbulanceManagementAmbulanceDispatchManagement;
         "ambulance-management-main-container": Omit<AmbulanceManagementMainContainer, keyof AmbulanceManagementMainContainerAttributes> & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes]?: AmbulanceManagementMainContainer[K] } & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes as `attr:${K}`]?: AmbulanceManagementMainContainerAttributes[K] } & { [K in keyof AmbulanceManagementMainContainer & keyof AmbulanceManagementMainContainerAttributes as `prop:${K}`]?: AmbulanceManagementMainContainer[K] };
-        "ambulance-management-paramedic-vehicle-management": AmbulanceManagementParamedicVehicleManagement;
+        "ambulance-management-paramedic-vehicle-management": Omit<AmbulanceManagementParamedicVehicleManagement, keyof AmbulanceManagementParamedicVehicleManagementAttributes> & { [K in keyof AmbulanceManagementParamedicVehicleManagement & keyof AmbulanceManagementParamedicVehicleManagementAttributes]?: AmbulanceManagementParamedicVehicleManagement[K] } & { [K in keyof AmbulanceManagementParamedicVehicleManagement & keyof AmbulanceManagementParamedicVehicleManagementAttributes as `attr:${K}`]?: AmbulanceManagementParamedicVehicleManagementAttributes[K] } & { [K in keyof AmbulanceManagementParamedicVehicleManagement & keyof AmbulanceManagementParamedicVehicleManagementAttributes as `prop:${K}`]?: AmbulanceManagementParamedicVehicleManagement[K] };
         "ambulance-management-vehicle-delete-confirmation-modal": Omit<AmbulanceManagementVehicleDeleteConfirmationModal, keyof AmbulanceManagementVehicleDeleteConfirmationModalAttributes> & { [K in keyof AmbulanceManagementVehicleDeleteConfirmationModal & keyof AmbulanceManagementVehicleDeleteConfirmationModalAttributes]?: AmbulanceManagementVehicleDeleteConfirmationModal[K] } & { [K in keyof AmbulanceManagementVehicleDeleteConfirmationModal & keyof AmbulanceManagementVehicleDeleteConfirmationModalAttributes as `attr:${K}`]?: AmbulanceManagementVehicleDeleteConfirmationModalAttributes[K] } & { [K in keyof AmbulanceManagementVehicleDeleteConfirmationModal & keyof AmbulanceManagementVehicleDeleteConfirmationModalAttributes as `prop:${K}`]?: AmbulanceManagementVehicleDeleteConfirmationModal[K] };
         "ambulance-management-vehicle-details-modal": AmbulanceManagementVehicleDetailsModal;
         "ambulance-management-vehicle-form-modal": Omit<AmbulanceManagementVehicleFormModal, keyof AmbulanceManagementVehicleFormModalAttributes> & { [K in keyof AmbulanceManagementVehicleFormModal & keyof AmbulanceManagementVehicleFormModalAttributes]?: AmbulanceManagementVehicleFormModal[K] } & { [K in keyof AmbulanceManagementVehicleFormModal & keyof AmbulanceManagementVehicleFormModalAttributes as `attr:${K}`]?: AmbulanceManagementVehicleFormModalAttributes[K] } & { [K in keyof AmbulanceManagementVehicleFormModal & keyof AmbulanceManagementVehicleFormModalAttributes as `prop:${K}`]?: AmbulanceManagementVehicleFormModal[K] };

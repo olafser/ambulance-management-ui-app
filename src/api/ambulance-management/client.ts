@@ -10,12 +10,15 @@ import {
 } from './index';
 
 import type { VehicleDraft, VehicleRecord } from '../../types/vehicle';
-// change basePath to     basePath: 'http://localhost:8080/api' for development
-const api = new AmbulanceManagementApi(
-  new Configuration({
-    basePath: '/api',
-  }),
-);
+
+const DEFAULT_API_BASE = '/api';
+
+const createApiClient = (apiBase: string = DEFAULT_API_BASE) =>
+  new AmbulanceManagementApi(
+    new Configuration({
+      basePath: apiBase || DEFAULT_API_BASE,
+    }),
+  );
 
 const padDatePart = (value: number) => String(value).padStart(2, '0');
 
@@ -46,21 +49,21 @@ const toVehiclePayload = (draft: VehicleDraft): VehicleCreateRequest | VehicleUp
   };
 };
 
-export const listVehicles = async (): Promise<VehicleRecord[]> => {
-  const vehicles = await api.vehiclesGet({});
+export const listVehicles = async (apiBase?: string): Promise<VehicleRecord[]> => {
+  const vehicles = await createApiClient(apiBase).vehiclesGet({});
   return vehicles.map(toVehicleRecord);
 };
 
-export const createVehicle = async (draft: VehicleDraft): Promise<VehicleRecord> => {
-  const vehicle = await api.vehiclesPost({
+export const createVehicle = async (draft: VehicleDraft, apiBase?: string): Promise<VehicleRecord> => {
+  const vehicle = await createApiClient(apiBase).vehiclesPost({
     vehicleCreateRequest: toVehiclePayload(draft),
   });
 
   return toVehicleRecord(vehicle);
 };
 
-export const updateVehicle = async (vehicleId: number, draft: VehicleDraft): Promise<VehicleRecord> => {
-  const vehicle = await api.vehiclesVehicleIdPut({
+export const updateVehicle = async (vehicleId: number, draft: VehicleDraft, apiBase?: string): Promise<VehicleRecord> => {
+  const vehicle = await createApiClient(apiBase).vehiclesVehicleIdPut({
     vehicleId,
     vehicleUpdateRequest: toVehiclePayload(draft),
   });
@@ -68,8 +71,8 @@ export const updateVehicle = async (vehicleId: number, draft: VehicleDraft): Pro
   return toVehicleRecord(vehicle);
 };
 
-export const deleteVehicle = async (vehicleId: number): Promise<void> => {
-  await api.vehiclesVehicleIdDelete({ vehicleId });
+export const deleteVehicle = async (vehicleId: number, apiBase?: string): Promise<void> => {
+  await createApiClient(apiBase).vehiclesVehicleIdDelete({ vehicleId });
 };
 
 export const getApiErrorMessage = async (error: unknown, fallbackMessage: string): Promise<string> => {
@@ -87,7 +90,7 @@ export const getApiErrorMessage = async (error: unknown, fallbackMessage: string
   }
 
   if (error instanceof FetchError) {
-    return 'Unable to reach the ambulance management API. Check that the backend is running at http://localhost:8080/api.';
+    return 'Unable to reach the ambulance management API. Check that the backend API is reachable.';
   }
 
   if (error instanceof Error && error.message.trim()) {

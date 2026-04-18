@@ -27,11 +27,13 @@ describe('ambulance-management-main-container', () => {
         AmbulanceManagementParamedicVehicleManagement,
         AmbulanceManagementAmbulanceDispatchManagement,
       ],
-      html: '<ambulance-management-main-container base-path="/ambulance-management/"></ambulance-management-main-container>',
+      html:
+        '<ambulance-management-main-container base-path="/ambulance-management/" api-base="http://localhost:30081/api"></ambulance-management-main-container>',
     });
 
     const child = page.root?.shadowRoot?.querySelector('ambulance-management-paramedic-vehicle-management');
     expect(child).not.toBeNull();
+    expect(child?.getAttribute('api-base')).toBe('http://localhost:30081/api');
   });
 
   it('respects a nested base path for dispatch management', async () => {

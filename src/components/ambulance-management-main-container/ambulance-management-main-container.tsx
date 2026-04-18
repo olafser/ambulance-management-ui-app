@@ -23,6 +23,7 @@ const normalizePath = (path: string) => (path !== '/' ? path.replace(/\/+$/, '')
 })
 export class AmbulanceManagementMainContainer {
   @Prop() basePath: string = '';
+  @Prop() apiBase: string = '';
 
   @State() private relativePath = '';
 
@@ -176,7 +177,7 @@ export class AmbulanceManagementMainContainer {
   private renderContent() {
     switch (this.activeView) {
       case 'paramedic-vehicle-management':
-        return <ambulance-management-paramedic-vehicle-management></ambulance-management-paramedic-vehicle-management>;
+        return <ambulance-management-paramedic-vehicle-management api-base={this.apiBase}></ambulance-management-paramedic-vehicle-management>;
       case 'ambulance-dispatch-management':
         return <ambulance-management-ambulance-dispatch-management></ambulance-management-ambulance-dispatch-management>;
       default:
