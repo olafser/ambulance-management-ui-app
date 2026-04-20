@@ -50,7 +50,6 @@ const toVehiclePayload = (draft: VehicleDraft): VehicleCreateRequest | VehicleUp
 };
 
 export const listVehicles = async (apiBase?: string): Promise<VehicleRecord[]> => {
-  console.log(`Fetching vehicles from API at ${apiBase}...`);
   const vehicles = await createApiClient(apiBase).vehiclesGet({});
   return vehicles.map(toVehicleRecord);
 };
