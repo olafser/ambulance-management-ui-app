@@ -1,5 +1,9 @@
 :host {
-  --md-icon-font: 'Material Symbols Outlined Variable';
+  --md-icon-font: 'Material Symbols Outlined';
+  --ambulance-management-primary: #0d7ea2;
+  --ambulance-management-primary-dark: #0b6f8f;
+  --ambulance-management-primary-soft: rgba(13, 126, 162, 0.12);
+  --ambulance-management-primary-text: #ffffff;
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -73,7 +77,7 @@
 }
 
 .nav-link.active::after {
-  background: #2f6b8a;
+  background: var(--ambulance-management-primary);
 }
 
 .content {
@@ -83,13 +87,68 @@
 .overview {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1.25rem;
   width: 100%;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  background: #ffffff;
+  padding: 1.6rem;
+  border-radius: 1.2rem;
+  background:
+    radial-gradient(circle at top right, rgba(208, 235, 247, 0.92), transparent 22rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 250, 252, 0.98));
   border: 1px solid rgba(22, 56, 77, 0.08);
-  box-shadow: 0 10px 30px rgba(20, 48, 66, 0.06);
+  box-shadow: 0 18px 42px rgba(20, 48, 66, 0.08);
+}
+
+.overview-hero,
+.overview-actions,
+.overview-grid,
+.metric-grid {
+  display: flex;
+}
+
+.overview-hero {
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.overview-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 42rem;
+}
+
+.overview-actions {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  min-width: 15rem;
+}
+
+.overview-actions md-filled-tonal-button {
+  --md-filled-tonal-button-container-color: var(--ambulance-management-primary-soft);
+  --md-filled-tonal-button-label-text-color: var(--ambulance-management-primary-dark);
+  --md-filled-tonal-button-hover-state-layer-color: rgba(13, 126, 162, 0.08);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.overview-actions md-outlined-button {
+  --md-outlined-button-outline-color: rgba(13, 126, 162, 0.28);
+  --md-outlined-button-label-text-color: var(--ambulance-management-primary);
+  --md-outlined-button-hover-state-layer-color: rgba(13, 126, 162, 0.08);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.overview-label,
+.panel-label {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ambulance-management-primary);
 }
 
 .overview-title {
@@ -101,5 +160,152 @@
 .overview-text {
   margin: 0;
   color: #426174;
+}
+
+.overview-feedback {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  background: rgba(255, 244, 239, 0.98);
+  border: 1px solid rgba(139, 47, 22, 0.15);
+  color: #8b2f16;
+}
+
+.overview-grid {
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.overview-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.35rem;
+  border-radius: 1.15rem;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(22, 56, 77, 0.08);
+  box-shadow: 0 16px 34px rgba(20, 48, 66, 0.05);
+}
+
+.vehicle-panel {
+  background:
+    radial-gradient(circle at top right, rgba(13, 126, 162, 0.1), transparent 18rem),
+    rgba(255, 255, 255, 0.97);
+}
+
+.dispatch-panel {
+  background:
+    radial-gradient(circle at top right, rgba(10, 116, 146, 0.08), transparent 18rem),
+    rgba(255, 255, 255, 0.97);
+}
+
+.panel-header {
+  align-items: flex-start;
+}
+
+.panel-header h2,
+.summary-copy p {
+  margin: 0;
+}
+
+.panel-header h2 {
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  color: #133346;
+}
+
+.panel-copy {
+  margin: 0.45rem 0 0;
+  max-width: 42rem;
+  color: #4d6978;
+  line-height: 1.5;
+}
+
+.panel-header md-filled-tonal-button {
+  --md-filled-tonal-button-container-color: var(--ambulance-management-primary);
+  --md-filled-tonal-button-label-text-color: var(--ambulance-management-primary-text);
+  --md-filled-tonal-button-hover-state-layer-color: rgba(255, 255, 255, 0.14);
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.panel-header md-outlined-button {
+  --md-outlined-button-outline-color: rgba(13, 126, 162, 0.28);
+  --md-outlined-button-label-text-color: var(--ambulance-management-primary);
+  --md-outlined-button-hover-state-layer-color: rgba(13, 126, 162, 0.08);
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.metric-grid {
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.overview-metric {
+  flex: 1 1 10rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  background: #f6fafc;
+  border: 1px solid rgba(22, 56, 77, 0.08);
+}
+
+.overview-metric.accent {
+  background: rgba(225, 242, 250, 0.95);
+  border-color: rgba(47, 107, 138, 0.16);
+}
+
+.overview-metric-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #597483;
+}
+
+.overview-metric-value {
+  font-size: 1.9rem;
+  line-height: 1;
+  color: #143042;
+}
+
+.status-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+md-suggestion-chip {
+  --md-suggestion-chip-container-height: 2.5rem;
+  --md-suggestion-chip-label-text-color: #143042;
+  --md-suggestion-chip-outline-color: rgba(13, 126, 162, 0.18);
+  --md-suggestion-chip-hover-state-layer-color: rgba(13, 126, 162, 0.12);
+}
+
+.summary-copy p {
+  color: #4b6878;
+}
+
+@media (max-width: 900px) {
+  .overview-hero,
+  .overview-grid,
+  .overview-feedback {
+    flex-direction: column;
+  }
+
+  .overview-actions {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .overview {
+    padding: 1.15rem;
+  }
 }
 

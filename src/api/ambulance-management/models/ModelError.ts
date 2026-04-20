@@ -64,3 +64,4 @@ export function ModelErrorToJSON(value?: ModelError | null): any {
         'message': value.message,
     };
 }
+

@@ -38,3 +38,4 @@ export function VehicleStatusFromJSONTyped(json: any, ignoreDiscriminator: boole
 export function VehicleStatusToJSON(value?: VehicleStatus | null): any {
     return value as any;
 }
+

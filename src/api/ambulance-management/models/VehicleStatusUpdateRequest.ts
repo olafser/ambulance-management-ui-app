@@ -71,3 +71,4 @@ export function VehicleStatusUpdateRequestToJSON(value?: VehicleStatusUpdateRequ
         'status': VehicleStatusToJSON(value.status),
     };
 }
+

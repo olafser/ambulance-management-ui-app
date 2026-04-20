@@ -1,5 +1,10 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 
+import { listVehicles, getApiErrorMessage } from '../../api/ambulance-management/client';
+import { listDispatches } from '../../api/ambulance-management/dispatch-client';
+import { isHistoricalDispatch, type DispatchRecord } from '../../types/dispatch';
+import { VEHICLE_STATUS_LABELS, type VehicleRecord, type VehicleStatus } from '../../types/vehicle';
+
 declare global {
   interface Window {
     navigation: any;
@@ -26,6 +31,10 @@ export class AmbulanceManagementMainContainer {
   @Prop() apiBase: string = '';
 
   @State() private relativePath = '';
+  @State() private overviewVehicles: VehicleRecord[] = [];
+  @State() private overviewDispatches: DispatchRecord[] = [];
+  @State() private isOverviewLoading = true;
+  @State() private overviewError = '';
 
   private resolvedBasePath = '/';
 
@@ -40,7 +49,7 @@ export class AmbulanceManagementMainContainer {
     });
   }
 
-  private readonly handleNavigate = (event: Event) => {
+  private readonly handleNavigate = async (event: Event) => {
     const navigateEvent = event as any;
     if (navigateEvent.canIntercept) {
       navigateEvent.intercept();
@@ -49,6 +58,9 @@ export class AmbulanceManagementMainContainer {
     const path = new URL(navigateEvent.destination.url).pathname;
     this.resolvedBasePath = this.resolveBasePath(path);
     this.syncRelativePath(path);
+    if (this.activeView === 'home') {
+      await this.loadOverview();
+    }
     this.logNavigation('handled navigate event', {
       destinationUrl: navigateEvent.destination?.url,
       intercepted: navigateEvent.canIntercept ?? false,
@@ -56,10 +68,11 @@ export class AmbulanceManagementMainContainer {
     });
   };
 
-  componentWillLoad() {
+  async componentWillLoad() {
     this.resolvedBasePath = this.resolveBasePath();
     window.navigation?.addEventListener('navigate', this.handleNavigate);
     this.syncRelativePath(location.pathname);
+    await this.loadOverview();
     this.logNavigation('component will load');
   }
 
@@ -136,12 +149,162 @@ export class AmbulanceManagementMainContainer {
     window.dispatchEvent(popStateEvent);
     this.resolvedBasePath = this.resolveBasePath(absolutePath);
     this.syncRelativePath(absolutePath);
+    if (this.activeView === 'home') {
+      void this.loadOverview();
+    }
     this.logNavigation('navigate requested', {
       requestedPath: path,
       navigationBasePath,
       absolutePath,
       navigationApiAvailable: Boolean(window.navigation?.navigate),
     });
+  }
+
+  private async loadOverview() {
+    this.isOverviewLoading = true;
+    this.overviewError = '';
+
+    try {
+      const [vehicles, dispatches] = await Promise.all([listVehicles(this.apiBase), listDispatches(this.apiBase)]);
+      this.overviewVehicles = vehicles;
+      this.overviewDispatches = dispatches;
+    } catch (error) {
+      this.overviewError = await getApiErrorMessage(error, 'Unable to load home summary.');
+    } finally {
+      this.isOverviewLoading = false;
+    }
+  }
+
+  private get vehicleStatusCounts() {
+    return this.overviewVehicles.reduce<Record<VehicleStatus, number>>(
+      (counts, vehicle) => {
+        counts[vehicle.status] += 1;
+        return counts;
+      },
+      {
+        AVAILABLE: 0,
+        ON_MISSION: 0,
+        OUT_OF_SERVICE: 0,
+        IN_SERVICE: 0,
+      },
+    );
+  }
+
+  private get activeDispatchCount() {
+    return this.overviewDispatches.filter((dispatch) => !isHistoricalDispatch(dispatch)).length;
+  }
+
+  private get historicalDispatchCount() {
+    return this.overviewDispatches.filter((dispatch) => isHistoricalDispatch(dispatch)).length;
+  }
+
+  private renderOverviewMetric(label: string, value: string, tone: 'neutral' | 'accent' = 'neutral') {
+    return (
+      <article class={{ 'overview-metric': true, accent: tone === 'accent' }}>
+        <span class="overview-metric-label">{label}</span>
+        <strong class="overview-metric-value">{value}</strong>
+      </article>
+    );
+  }
+
+  private renderStatusChip(label: string, value: number) {
+    return <md-suggestion-chip label={`${label}: ${value}`}></md-suggestion-chip>;
+  }
+
+  private renderOverview() {
+    return (
+      <section class="overview">
+        <div class="overview-hero">
+          <div class="overview-copy">
+            <p class="overview-label">Operations dashboard</p>
+            <h1 class="overview-title">Ambulance Management</h1>
+            <p class="overview-text">
+              Review the current fleet snapshot, see dispatch activity, and jump directly into the operational modules.
+            </p>
+          </div>
+
+          <div class="overview-actions">
+            <md-filled-tonal-button onClick={() => this.navigate('./paramedic-vehicle-management')}>
+              <md-icon slot="icon">local_shipping</md-icon>
+              Vehicle management
+            </md-filled-tonal-button>
+            <md-outlined-button onClick={() => this.navigate('./ambulance-dispatch-management')}>
+              <md-icon slot="icon">emergency</md-icon>
+              Dispatch management
+            </md-outlined-button>
+          </div>
+        </div>
+
+        {this.isOverviewLoading ? <md-linear-progress indeterminate></md-linear-progress> : null}
+
+        {this.overviewError ? (
+          <div class="overview-feedback" role="alert">
+            <span>{this.overviewError}</span>
+            <md-outlined-button onClick={() => this.loadOverview()}>
+              <md-icon slot="icon">refresh</md-icon>
+              Retry
+            </md-outlined-button>
+          </div>
+        ) : null}
+
+        <div class="overview-grid">
+          <section class="overview-panel vehicle-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-label">Module 01</p>
+                <h2>Paramedic Vehicle Management</h2>
+                <p class="panel-copy">Monitor fleet readiness, availability, and operational state across the ambulance pool.</p>
+              </div>
+              <md-filled-tonal-button onClick={() => this.navigate('./paramedic-vehicle-management')}>
+                <md-icon slot="icon">local_shipping</md-icon>
+                Open vehicle management
+              </md-filled-tonal-button>
+            </div>
+
+            <div class="metric-grid">
+              {this.renderOverviewMetric('Total vehicles', String(this.overviewVehicles.length), 'accent')}
+              {this.renderOverviewMetric('Available', String(this.vehicleStatusCounts.AVAILABLE))}
+              {this.renderOverviewMetric('On mission', String(this.vehicleStatusCounts.ON_MISSION))}
+              {this.renderOverviewMetric('In service', String(this.vehicleStatusCounts.IN_SERVICE))}
+              {this.renderOverviewMetric('Out of service', String(this.vehicleStatusCounts.OUT_OF_SERVICE))}
+            </div>
+
+            <div class="status-list">
+              {(['AVAILABLE', 'ON_MISSION', 'IN_SERVICE', 'OUT_OF_SERVICE'] as VehicleStatus[]).map((status) =>
+                this.renderStatusChip(VEHICLE_STATUS_LABELS[status], this.vehicleStatusCounts[status]),
+              )}
+            </div>
+          </section>
+
+          <section class="overview-panel dispatch-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-label">Module 02</p>
+                <h2>Ambulance Dispatch Management</h2>
+                <p class="panel-copy">Track current interventions, completed missions, and operational dispatch workload in one place.</p>
+              </div>
+              <md-outlined-button onClick={() => this.navigate('./ambulance-dispatch-management')}>
+                <md-icon slot="icon">emergency</md-icon>
+                Open dispatch management
+              </md-outlined-button>
+            </div>
+
+            <div class="metric-grid">
+              {this.renderOverviewMetric('Total dispatches', String(this.overviewDispatches.length), 'accent')}
+              {this.renderOverviewMetric('Active dispatches', String(this.activeDispatchCount))}
+              {this.renderOverviewMetric('Historical dispatches', String(this.historicalDispatchCount))}
+            </div>
+
+            <div class="summary-copy">
+              <p>
+                Use the vehicle module to manage fleet readiness and the dispatch module to track interventions from accepted call
+                through completion.
+              </p>
+            </div>
+          </section>
+        </div>
+      </section>
+    );
   }
 
   private get activeView(): ActiveView {
@@ -179,14 +342,9 @@ export class AmbulanceManagementMainContainer {
       case 'paramedic-vehicle-management':
         return <ambulance-management-paramedic-vehicle-management api-base={this.apiBase}></ambulance-management-paramedic-vehicle-management>;
       case 'ambulance-dispatch-management':
-        return <ambulance-management-ambulance-dispatch-management></ambulance-management-ambulance-dispatch-management>;
+        return <ambulance-management-ambulance-dispatch-management api-base={this.apiBase}></ambulance-management-ambulance-dispatch-management>;
       default:
-        return (
-          <section class="overview">
-            <h1 class="overview-title">Ambulance Management</h1>
-            <p class="overview-text">Choose a section from the navigation bar to continue.</p>
-          </section>
-        );
+        return this.renderOverview();
     }
   }
 

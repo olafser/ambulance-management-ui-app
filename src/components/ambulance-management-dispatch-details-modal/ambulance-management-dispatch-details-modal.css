@@ -1,0 +1,135 @@
+:host {
+  display: block;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(16, 32, 43, 0.48);
+}
+
+.modal-shell {
+  width: min(820px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  border-radius: 1.4rem;
+  background: #ffffff;
+  box-shadow: 0 28px 60px rgba(9, 28, 41, 0.24);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.4rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  margin: 0 0 0.3rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2f6b8a;
+}
+
+.modal-header h3,
+.notes-panel p,
+.status-copy {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0.3rem 0 0;
+  color: #4c6878;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.detail-item,
+.notes-panel,
+.status-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #f7fafc;
+  border: 1px solid rgba(22, 56, 77, 0.08);
+}
+
+.detail-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #5a7484;
+  font-weight: 700;
+}
+
+.detail-value {
+  color: #143042;
+  font-weight: 600;
+}
+
+.status-copy {
+  color: #4c6878;
+}
+
+.status-controls,
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.status-controls {
+  align-items: center;
+}
+
+md-outlined-select {
+  min-width: 16rem;
+}
+
+.feedback-banner {
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  color: #8b2f16;
+  background: rgba(255, 244, 239, 0.98);
+  border: 1px solid rgba(139, 47, 22, 0.15);
+}
+
+.modal-actions {
+  justify-content: flex-end;
+}
+
+@media (max-width: 720px) {
+  .modal-header,
+  .status-controls,
+  .modal-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  md-outlined-select {
+    min-width: 0;
+  }
+}

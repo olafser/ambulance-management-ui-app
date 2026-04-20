@@ -1,6 +1,13 @@
-apis/AmbulanceManagementApi.ts
+apis/DispatchManagementApi.ts
+apis/VehicleManagementApi.ts
 apis/index.ts
 index.ts
+models/Dispatch.ts
+models/DispatchCreateRequest.ts
+models/DispatchPriority.ts
+models/DispatchStatus.ts
+models/DispatchStatusUpdateRequest.ts
+models/DispatchUpdateRequest.ts
 models/ModelError.ts
 models/Vehicle.ts
 models/VehicleCreateRequest.ts

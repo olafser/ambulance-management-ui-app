@@ -1,0 +1,71 @@
+:host {
+  display: block;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(16, 32, 43, 0.48);
+}
+
+.confirm-shell {
+  width: min(480px, 100%);
+  border-radius: 1.4rem;
+  background: #ffffff;
+  box-shadow: 0 28px 60px rgba(9, 28, 41, 0.24);
+}
+
+.confirm-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.4rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b0481f;
+}
+
+h3,
+.description {
+  margin: 0;
+}
+
+.description {
+  color: #4c6878;
+}
+
+.feedback-banner {
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  color: #8b2f16;
+  background: rgba(255, 244, 239, 0.98);
+  border: 1px solid rgba(139, 47, 22, 0.15);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.danger-action {
+  --md-filled-button-container-color: #b2381c;
+  --md-filled-button-label-text-color: #ffffff;
+}
+
+@media (max-width: 560px) {
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+}

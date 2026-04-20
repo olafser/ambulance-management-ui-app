@@ -79,13 +79,7 @@ h3 {
 label {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-}
-
-label span {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #5b7684;
+  gap: 0.45rem;
 }
 
 input,
@@ -101,8 +95,12 @@ textarea {
   color: #173042;
 }
 
-select {
-  padding-right: 2.25rem;
+md-outlined-select {
+  width: 100%;
+}
+
+md-outlined-text-field {
+  width: 100%;
 }
 
 textarea {
@@ -111,7 +109,6 @@ textarea {
 }
 
 input:focus,
-select:focus,
 textarea:focus {
   outline: 2px solid rgba(15, 158, 199, 0.2);
   border-color: #0f9ec7;

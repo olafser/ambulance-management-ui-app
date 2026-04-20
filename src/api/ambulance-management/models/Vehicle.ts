@@ -152,3 +152,4 @@ export function VehicleToJSON(value?: Vehicle | null): any {
         'notes': value.notes,
     };
 }
+

@@ -141,3 +141,4 @@ export function VehicleUpdateRequestToJSON(value?: VehicleUpdateRequest | null):
         'notes': value.notes,
     };
 }
+

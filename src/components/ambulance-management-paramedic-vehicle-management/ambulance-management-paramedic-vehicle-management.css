@@ -31,7 +31,7 @@
   letter-spacing: 0.08em;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #2f6b8a;
+  color: var(--ambulance-management-primary, #0d7ea2);
 }
 
 h2,
@@ -65,8 +65,10 @@ h2 {
 
 .primary-button {
   color: #fff;
-  background: #0d7ea2;
+  background: var(--ambulance-management-primary, #0d7ea2);
   box-shadow: none;
+  font-size: 1rem;
+  line-height: 1.2;
 }
 
 .primary-button:hover,
@@ -76,7 +78,7 @@ h2 {
 
 .primary-button:hover,
 .primary-button:focus-visible {
-  background: #0b6f8f;
+  background: var(--ambulance-management-primary-dark, #0b6f8f);
 }
 
 .primary-button:disabled {

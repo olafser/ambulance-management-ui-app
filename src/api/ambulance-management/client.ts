@@ -1,8 +1,8 @@
 import {
-  AmbulanceManagementApi,
   Configuration,
   FetchError,
   ResponseError,
+  VehicleManagementApi,
   type ModelError,
   type Vehicle,
   type VehicleCreateRequest,
@@ -14,7 +14,7 @@ import type { VehicleDraft, VehicleRecord } from '../../types/vehicle';
 const DEFAULT_API_BASE = '/api';
 
 const createApiClient = (apiBase: string = DEFAULT_API_BASE) =>
-  new AmbulanceManagementApi(
+  new VehicleManagementApi(
     new Configuration({
       basePath: apiBase || DEFAULT_API_BASE,
     }),

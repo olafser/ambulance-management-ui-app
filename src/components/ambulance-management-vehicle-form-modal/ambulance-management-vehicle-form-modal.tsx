@@ -2,6 +2,9 @@ import { Component, Event, EventEmitter, Host, Prop, State, Watch, h } from '@st
 
 import { VEHICLE_STATUS_LABELS, type VehicleDraft, type VehicleFormMode, type VehicleStatus } from '../../types/vehicle';
 
+type SelectLikeTarget = EventTarget & { value: string };
+type TextFieldLikeTarget = EventTarget & { value: string };
+
 @Component({
   tag: 'ambulance-management-vehicle-form-modal',
   styleUrl: 'ambulance-management-vehicle-form-modal.css',
@@ -49,6 +52,29 @@ export class AmbulanceManagementVehicleFormModal {
     this.saveRequest.emit(this.draft);
   }
 
+  private renderTextField(
+    label: string,
+    field: keyof VehicleDraft,
+    options: { required?: boolean; type?: string; min?: string; textarea?: boolean; rows?: number } = {},
+  ) {
+    const value = this.draft[field] as string;
+
+    return (
+      <label class={{ 'notes-field': Boolean(options.textarea) }}>
+        <md-outlined-text-field
+          class="material-field"
+          label={label}
+          required={options.required}
+          type={options.textarea ? 'textarea' : options.type ?? 'text'}
+          min={options.min}
+          rows={options.textarea ? options.rows ?? 4 : undefined}
+          value={value}
+          onInput={(event) => this.updateDraft(field, (event.target as TextFieldLikeTarget).value as VehicleDraft[typeof field])}
+        ></md-outlined-text-field>
+      </label>
+    );
+  }
+
   render() {
     return (
       <Host>
@@ -76,103 +102,47 @@ export class AmbulanceManagementVehicleFormModal {
                 ) : null}
 
                 <div class="form-grid">
+                  {this.renderTextField('Vehicle ID', 'callSign', { required: true })}
+                  {this.renderTextField('Vehicle type', 'vehicleType', { required: true })}
+                  {this.renderTextField('Plate number', 'plateNumber', { required: true })}
+                  {this.renderTextField('Station', 'station', { required: true })}
+                  {this.renderTextField('Assigned crew', 'assignedCrew')}
                   <label>
-                    <span>ID</span>
-                    <input
-                      required
-                      value={this.draft.callSign}
-                      onInput={(event) => this.updateDraft('callSign', (event.target as HTMLInputElement).value)}
-                    />
-                  </label>
-                  <label>
-                    <span>Vehicle type</span>
-                    <input
-                      required
-                      value={this.draft.vehicleType}
-                      onInput={(event) => this.updateDraft('vehicleType', (event.target as HTMLInputElement).value)}
-                    />
-                  </label>
-                  <label>
-                    <span>Plate number</span>
-                    <input
-                      required
-                      value={this.draft.plateNumber}
-                      onInput={(event) => this.updateDraft('plateNumber', (event.target as HTMLInputElement).value)}
-                    />
-                  </label>
-                  <label>
-                    <span>Station</span>
-                    <input
-                      required
-                      value={this.draft.station}
-                      onInput={(event) => this.updateDraft('station', (event.target as HTMLInputElement).value)}
-                    />
-                  </label>
-                  <label>
-                    <span>Assigned crew</span>
-                    <input
-                      value={this.draft.assignedCrew}
-                      onInput={(event) => this.updateDraft('assignedCrew', (event.target as HTMLInputElement).value)}
-                    />
-                  </label>
-                  <label>
-                    <span>Status</span>
-                    <select
+                    <md-outlined-select
+                      class="material-select"
+                      label="Status"
+                      menu-positioning="fixed"
                       onInput={(event) =>
-                        this.updateDraft('status', (event.target as HTMLSelectElement).value as VehicleStatus)
+                        this.updateDraft('status', (event.target as SelectLikeTarget).value as VehicleStatus)
                       }
                     >
-                      <option value="AVAILABLE" selected={this.draft.status === 'AVAILABLE'}>
+                      <md-select-option value="AVAILABLE" selected={this.draft.status === 'AVAILABLE'}>
                         {VEHICLE_STATUS_LABELS.AVAILABLE}
-                      </option>
-                      <option value="ON_MISSION" selected={this.draft.status === 'ON_MISSION'}>
+                      </md-select-option>
+                      <md-select-option value="ON_MISSION" selected={this.draft.status === 'ON_MISSION'}>
                         {VEHICLE_STATUS_LABELS.ON_MISSION}
-                      </option>
-                      <option value="OUT_OF_SERVICE" selected={this.draft.status === 'OUT_OF_SERVICE'}>
+                      </md-select-option>
+                      <md-select-option value="OUT_OF_SERVICE" selected={this.draft.status === 'OUT_OF_SERVICE'}>
                         {VEHICLE_STATUS_LABELS.OUT_OF_SERVICE}
-                      </option>
-                      <option value="IN_SERVICE" selected={this.draft.status === 'IN_SERVICE'}>
+                      </md-select-option>
+                      <md-select-option value="IN_SERVICE" selected={this.draft.status === 'IN_SERVICE'}>
                         {VEHICLE_STATUS_LABELS.IN_SERVICE}
-                      </option>
-                    </select>
+                      </md-select-option>
+                    </md-outlined-select>
                   </label>
-                  <label>
-                    <span>Mileage (km)</span>
-                    <input
-                      required
-                      min="0"
-                      type="number"
-                      value={this.draft.mileageKm}
-                      onInput={(event) => this.updateDraft('mileageKm', (event.target as HTMLInputElement).value)}
-                    />
-                  </label>
-                  <label>
-                    <span>Last service date</span>
-                    <input
-                      required
-                      type="date"
-                      value={this.draft.lastServiceDate}
-                      onInput={(event) => this.updateDraft('lastServiceDate', (event.target as HTMLInputElement).value)}
-                    />
-                  </label>
-                  <label class="notes-field">
-                    <span>Notes</span>
-                    <textarea
-                      rows={4}
-                      value={this.draft.notes}
-                      onInput={(event) => this.updateDraft('notes', (event.target as HTMLTextAreaElement).value)}
-                    ></textarea>
-                  </label>
+                  {this.renderTextField('Mileage (km)', 'mileageKm', { required: true, type: 'number', min: '0' })}
+                  {this.renderTextField('Last service date', 'lastServiceDate', { required: true, type: 'date' })}
+                  {this.renderTextField('Notes', 'notes', { textarea: true, rows: 4 })}
                 </div>
               </div>
 
               <div class="modal-actions">
-                <button class="secondary-button" type="button" disabled={this.isSubmitting} onClick={() => this.closeRequest.emit()}>
+                <md-outlined-button disabled={this.isSubmitting} onClick={() => this.closeRequest.emit()}>
                   Cancel
-                </button>
-                <button class="primary-button" type="submit" disabled={this.isSubmitting}>
-                  {this.isSubmitting ? 'Saving...' : 'Save'}
-                </button>
+                </md-outlined-button>
+                <md-filled-tonal-button type="submit" disabled={this.isSubmitting}>
+                  {this.isSubmitting ? 'Saving...' : 'Save vehicle'}
+                </md-filled-tonal-button>
               </div>
             </form>
           </div>
