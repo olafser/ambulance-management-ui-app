@@ -13,27 +13,11 @@
   white-space: nowrap;
 }
 
-.status-accepted {
-  background: rgba(224, 241, 255, 0.95);
-  color: #14507a;
-}
-
-.status-en-route {
-  background: rgba(255, 246, 219, 0.98);
-  color: #8c5900;
-}
-
-.status-on-scene {
-  background: rgba(236, 241, 214, 0.98);
-  color: #5f6f00;
-}
-
-.status-transporting-to-hospital {
-  background: rgba(239, 231, 255, 0.98);
-  color: #6041a8;
-}
-
+.status-accepted,
+.status-en-route,
+.status-on-scene,
+.status-transporting-to-hospital,
 .status-completed {
-  background: rgba(229, 244, 235, 0.98);
-  color: #17663a;
+  background: var(--ambulance-management-primary-soft);
+  color: var(--ambulance-management-primary-dark);
 }

@@ -3,6 +3,51 @@
   width: 100%;
 }
 
+md-filled-button {
+  --md-filled-button-container-color: var(--ambulance-management-primary);
+  --md-filled-button-label-text-color: var(--ambulance-management-primary-text);
+  --md-filled-button-hover-state-layer-color: rgba(255, 255, 255, 0.14);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+md-outlined-button {
+  --md-outlined-button-outline-color: var(--ambulance-management-primary-outline);
+  --md-outlined-button-label-text-color: var(--ambulance-management-primary);
+  --md-outlined-button-hover-state-layer-color: var(--ambulance-management-primary-subtle);
+  font-weight: 700;
+}
+
+.create-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ambulance-management-primary-text);
+  background: var(--ambulance-management-primary);
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.create-button:hover,
+.create-button:focus-visible {
+  transform: translateY(-1px);
+  background: var(--ambulance-management-primary-dark);
+  outline: none;
+}
+
+.create-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+}
+
 .page {
   display: flex;
   flex-direction: column;
@@ -11,10 +56,10 @@
   padding: 1.75rem;
   border-radius: 1.5rem;
   background:
-    radial-gradient(circle at top right, rgba(208, 235, 247, 0.9), transparent 24rem),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 250, 252, 0.98));
-  border: 1px solid rgba(22, 56, 77, 0.08);
-  box-shadow: 0 24px 60px rgba(20, 48, 66, 0.08);
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(240, 247, 251, 0.92)),
+    radial-gradient(circle at right top, rgba(49, 130, 206, 0.08), transparent 40%);
+  border: 1px solid var(--ambulance-management-border-soft);
+  box-shadow: var(--ambulance-management-shadow-panel);
   box-sizing: border-box;
 }
 
@@ -24,21 +69,7 @@
   letter-spacing: 0.08em;
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--ambulance-management-primary, #0d7ea2);
-}
-
-md-filled-button {
-  --md-filled-button-container-color: var(--ambulance-management-primary, #0d7ea2);
-  --md-filled-button-label-text-color: var(--ambulance-management-primary-text, #ffffff);
-  --md-filled-button-hover-state-layer-color: rgba(255, 255, 255, 0.14);
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-md-outlined-button {
-  --md-outlined-button-outline-color: rgba(13, 126, 162, 0.28);
-  --md-outlined-button-label-text-color: var(--ambulance-management-primary, #0d7ea2);
-  --md-outlined-button-hover-state-layer-color: rgba(13, 126, 162, 0.08);
+  color: var(--ambulance-management-primary);
 }
 
 .page-header,
@@ -65,7 +96,7 @@ md-outlined-button {
 .status-card p,
 .primary-cell span {
   margin: 0;
-  color: #4c6878;
+  color: var(--ambulance-management-text-body);
 }
 
 .metrics-grid {
@@ -81,25 +112,26 @@ md-outlined-button {
   padding: 1rem 1.1rem;
   border-radius: 1.1rem;
   background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(22, 56, 77, 0.08);
+  border: 1px solid var(--ambulance-management-border-soft);
 }
 
 .metric-alert {
-  background: rgba(255, 239, 230, 0.95);
-  border-color: rgba(199, 83, 0, 0.18);
+  background: var(--ambulance-management-danger-soft);
+  border-color: var(--ambulance-management-danger-border);
+  color: var(--ambulance-management-danger-strong);
 }
 
 .metric-label {
   font-size: 0.82rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #587585;
+  color: var(--ambulance-management-text-muted);
 }
 
 .metric-value {
   font-size: 2rem;
   line-height: 1;
-  color: #143042;
+  color: var(--ambulance-management-text-strong);
 }
 
 .feedback-banner,
@@ -111,13 +143,13 @@ md-outlined-button {
   padding: 1rem 1.1rem;
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(22, 56, 77, 0.1);
+  border: 1px solid var(--ambulance-management-border-default);
 }
 
 .feedback-banner {
-  color: #8b2f16;
-  background: rgba(255, 244, 239, 0.98);
-  border-color: rgba(139, 47, 22, 0.15);
+  color: var(--ambulance-management-danger-strong);
+  background: var(--ambulance-management-danger-soft-strong);
+  border-color: var(--ambulance-management-danger-border-strong);
 }
 
 .empty-state {
@@ -145,15 +177,15 @@ md-outlined-button {
   height: 2.2rem;
   padding: 0 0.65rem;
   border-radius: 999px;
-  background: var(--ambulance-management-primary-soft, rgba(13, 126, 162, 0.12));
-  color: var(--ambulance-management-primary-dark, #0b6f8f);
+  background: var(--ambulance-management-primary-soft);
+  color: var(--ambulance-management-primary-dark);
   font-weight: 700;
 }
 
 .table-card {
   overflow: hidden;
   border-radius: 1rem;
-  border: 1px solid rgba(22, 56, 77, 0.08);
+  border: 1px solid var(--ambulance-management-border-soft);
   background: rgba(255, 255, 255, 0.96);
 }
 
@@ -167,14 +199,14 @@ md-outlined-button {
   padding: 0.95rem 1rem;
   text-align: left;
   vertical-align: middle;
-  border-bottom: 1px solid rgba(22, 56, 77, 0.08);
+  border-bottom: 1px solid var(--ambulance-management-border-soft);
 }
 
 .dispatch-table th {
   font-size: 0.8rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #5a7484;
+  color: var(--ambulance-management-text-muted);
   background: rgba(244, 248, 250, 0.95);
 }
 
@@ -189,7 +221,7 @@ md-outlined-button {
 
 .dispatch-row:hover,
 .dispatch-row:focus-visible {
-  background: rgba(236, 245, 249, 0.9);
+  background: var(--ambulance-management-info-row);
   outline: none;
 }
 
@@ -199,7 +231,7 @@ md-outlined-button {
 }
 
 .primary-cell strong {
-  color: #16384d;
+  color: var(--ambulance-management-text-heading-alt);
 }
 
 .priority-pill {
@@ -212,23 +244,23 @@ md-outlined-button {
 }
 
 .priority-low {
-  background: rgba(232, 243, 236, 0.98);
-  color: #1e6a3a;
+  background: var(--ambulance-management-success-bg);
+  color: var(--ambulance-management-success-text);
 }
 
 .priority-medium {
-  background: rgba(242, 246, 220, 0.98);
-  color: #697200;
+  background: var(--ambulance-management-warning-bg);
+  color: var(--ambulance-management-warning-text);
 }
 
 .priority-high {
-  background: rgba(255, 243, 222, 0.98);
-  color: #925400;
+  background: var(--ambulance-management-warning-bg-soft);
+  color: var(--ambulance-management-warning-text-soft);
 }
 
 .priority-critical {
-  background: rgba(255, 232, 227, 0.98);
-  color: #b32f1f;
+  background: #fde2e2;
+  color: var(--ambulance-management-danger-text);
 }
 
 .actions-column,
@@ -248,14 +280,21 @@ md-outlined-button {
   align-items: center;
   justify-content: center;
   padding: 0.3rem;
-  border: 1px solid #d6a5a5;
+  border: 1px solid var(--ambulance-management-danger-outline);
   border-radius: 0.55rem;
   background: transparent;
-  color: #9d3434;
+  color: var(--ambulance-management-danger-dark);
   font: inherit;
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
+}
+
+.delete-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+  color: var(--ambulance-management-text-muted);
+  border-color: var(--ambulance-management-border-default);
 }
 
 .delete-icon {
@@ -265,8 +304,8 @@ md-outlined-button {
 
 .delete-button:hover,
 .delete-button:focus-visible {
-  color: #7f2626;
-  border-color: #b97878;
+  color: var(--ambulance-management-danger-text);
+  border-color: var(--ambulance-management-danger-outline-hover);
   outline: none;
 }
 

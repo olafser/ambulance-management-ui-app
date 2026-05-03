@@ -8,7 +8,7 @@ import {
 
 import type { DispatchDraft, DispatchRecord, DispatchStatus } from '../../types/dispatch';
 
-const DEFAULT_API_BASE = '/api';
+const DEFAULT_API_BASE = 'http://localhost:8080/api';
 
 const createApiClient = (apiBase: string = DEFAULT_API_BASE) =>
   new DispatchManagementApi(

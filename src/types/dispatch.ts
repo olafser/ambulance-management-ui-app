@@ -4,7 +4,7 @@ export type { DispatchPriority, DispatchStatus } from '../api/ambulance-manageme
 
 export const DISPATCH_STATUS_LABELS: Record<DispatchStatus, string> = {
   ACCEPTED: 'Accepted',
-  EN_ROUTE: 'En route',
+  ON_ROUTE: 'On route',
   ON_SCENE: 'On scene',
   TRANSPORTING_TO_HOSPITAL: 'Transporting to hospital',
   COMPLETED: 'Completed',
@@ -19,7 +19,7 @@ export const DISPATCH_PRIORITY_LABELS: Record<DispatchPriority, string> = {
 
 export const DISPATCH_STATUS_ORDER: DispatchStatus[] = [
   'ACCEPTED',
-  'EN_ROUTE',
+  'ON_ROUTE',
   'ON_SCENE',
   'TRANSPORTING_TO_HOSPITAL',
   'COMPLETED',

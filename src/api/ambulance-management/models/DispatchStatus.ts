@@ -20,7 +20,7 @@
  */
 export const DispatchStatus = {
     Accepted: 'ACCEPTED',
-    EnRoute: 'EN_ROUTE',
+    EnRoute: 'ON_ROUTE',
     OnScene: 'ON_SCENE',
     TransportingToHospital: 'TRANSPORTING_TO_HOSPITAL',
     Completed: 'COMPLETED'

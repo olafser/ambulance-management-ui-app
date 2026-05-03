@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: rgba(7, 21, 30, 0.5);
+  background: var(--ambulance-management-bg-overlay-strong);
   backdrop-filter: blur(4px);
 }
 
@@ -19,8 +19,8 @@
   max-height: calc(100vh - 2rem);
   overflow: auto;
   border-radius: 1.4rem;
-  background: #fff;
-  box-shadow: 0 28px 70px rgba(7, 21, 30, 0.28);
+  background: var(--ambulance-management-bg-surface);
+  box-shadow: var(--ambulance-management-shadow-modal-strong);
 }
 
 .modal-content {
@@ -43,7 +43,7 @@
   letter-spacing: 0.08em;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #2f6b8a;
+  color: var(--ambulance-management-primary);
 }
 
 h3,
@@ -52,7 +52,7 @@ h3,
 }
 
 h3 {
-  color: #0f2735;
+  color: var(--ambulance-management-text-title);
 }
 
 .detail-grid {
@@ -68,24 +68,29 @@ h3 {
   gap: 0.25rem;
   padding: 0.75rem 0.85rem;
   border-radius: 1rem;
-  background: #f4f8fa;
+  background: var(--ambulance-management-bg-surface-muted);
 }
 
 .detail-label {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #5b7684;
+  color: var(--ambulance-management-text-muted);
 }
 
 .detail-value {
   font-weight: 600;
-  color: #173042;
+  color: var(--ambulance-management-text-strong);
 }
 
 .modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 0.6rem;
+}
+
+md-filled-button,
+md-outlined-button {
+  font-weight: 700;
 }
 
 .primary-button,
@@ -99,13 +104,20 @@ h3 {
 }
 
 .primary-button {
-  color: #fff;
-  background: #0d7ea2;
+  color: var(--ambulance-management-primary-text);
+  background: var(--ambulance-management-primary);
 }
 
 .secondary-button {
-  color: #1c4258;
-  background: #e7f0f5;
+  color: var(--ambulance-management-primary);
+  background: transparent;
+  border: 1px solid var(--ambulance-management-primary-outline);
+}
+
+.secondary-button:hover,
+.secondary-button:focus-visible {
+  background: var(--ambulance-management-primary-subtle);
+  outline: none;
 }
 
 .badge {
@@ -118,21 +130,21 @@ h3 {
 }
 
 .status-available {
-  color: #0d6a4d;
-  background: #daf5ea;
+  color: var(--ambulance-management-success-text);
+  background: var(--ambulance-management-success-bg);
 }
 
 .status-on-mission {
-  color: #965700;
-  background: #fff0d1;
+  color: var(--ambulance-management-warning-text);
+  background: var(--ambulance-management-warning-bg);
 }
 
 .status-out-of-service {
-  color: #8b2d2d;
+  color: var(--ambulance-management-danger-text);
   background: #fde2e2;
 }
 
 .status-in-service {
-  color: #4d3b96;
-  background: #ebe3ff;
+  color: var(--ambulance-management-info-text-soft);
+  background: var(--ambulance-management-info-bg-soft);
 }

@@ -27,14 +27,14 @@ export class AmbulanceManagementDispatchDeleteConfirmationModal {
             class="confirm-shell"
             role="alertdialog"
             aria-modal="true"
-            aria-label="Cancel dispatch confirmation"
+            aria-label="Delete dispatch confirmation"
             onClick={(event) => event.stopPropagation()}
           >
             <div class="confirm-content">
-              <p class="eyebrow">Cancel dispatch</p>
+              <p class="eyebrow">Delete dispatch</p>
               <h3>Are you sure?</h3>
               <p class="description">
-                Cancel dispatch <strong>{this.dispatch.incidentNumber}</strong> for <strong>{this.dispatch.patientName}</strong>. This
+                Delete dispatch <strong>{this.dispatch.incidentNumber}</strong> for <strong>{this.dispatch.patientName}</strong>. This
                 action cannot be undone.
               </p>
 
@@ -49,7 +49,7 @@ export class AmbulanceManagementDispatchDeleteConfirmationModal {
                   Keep dispatch
                 </md-outlined-button>
                 <md-filled-button class="danger-action" disabled={this.isDeleting} onClick={() => this.confirmRequest.emit()}>
-                  {this.isDeleting ? 'Cancelling...' : 'Cancel dispatch'}
+                  {this.isDeleting ? 'Deleting...' : 'Delete dispatch'}
                 </md-filled-button>
               </div>
             </div>

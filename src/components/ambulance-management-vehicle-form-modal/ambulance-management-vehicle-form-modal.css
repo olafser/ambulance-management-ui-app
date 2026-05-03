@@ -1,5 +1,24 @@
 :host {
   display: contents;
+  --md-sys-color-primary: var(--ambulance-management-primary);
+  --md-sys-color-on-primary: var(--ambulance-management-primary-text);
+  --md-sys-color-primary-container: var(--ambulance-management-primary-soft);
+  --md-sys-color-on-primary-container: var(--ambulance-management-primary-text);
+  --md-sys-color-outline: var(--ambulance-management-primary-outline);
+}
+
+md-filled-button {
+  --md-filled-button-container-color: var(--ambulance-management-primary);
+  --md-filled-button-label-text-color: var(--ambulance-management-primary-text);
+  --md-filled-button-hover-state-layer-color: rgba(255, 255, 255, 0.14);
+  font-weight: 700;
+}
+
+md-outlined-button {
+  --md-outlined-button-outline-color: var(--ambulance-management-primary-outline);
+  --md-outlined-button-label-text-color: var(--ambulance-management-primary);
+  --md-outlined-button-hover-state-layer-color: var(--ambulance-management-primary-subtle);
+  font-weight: 700;
 }
 
 .modal-backdrop {
@@ -10,7 +29,7 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: rgba(7, 21, 30, 0.5);
+  background: var(--ambulance-management-bg-overlay-strong);
   backdrop-filter: blur(4px);
 }
 
@@ -18,8 +37,8 @@
   width: min(100%, 52rem);
   max-height: calc(100vh - 2rem);
   border-radius: 1.4rem;
-  background: #fff;
-  box-shadow: 0 28px 70px rgba(7, 21, 30, 0.28);
+  background: var(--ambulance-management-bg-surface);
+  box-shadow: var(--ambulance-management-shadow-modal-strong);
   overflow: hidden;
 }
 
@@ -46,12 +65,12 @@
   letter-spacing: 0.08em;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #2f6b8a;
+  color: var(--ambulance-management-primary);
 }
 
 h3 {
   margin: 0;
-  color: #0f2735;
+  color: var(--ambulance-management-text-title);
 }
 
 .form-grid {
@@ -69,10 +88,10 @@ h3 {
 .feedback-banner {
   margin-bottom: 1rem;
   padding: 0.85rem 1rem;
-  border: 1px solid rgba(181, 58, 58, 0.2);
+  border: 1px solid var(--ambulance-management-danger-border);
   border-radius: 1rem;
-  background: #fff1f1;
-  color: #8d2f2f;
+  background: var(--ambulance-management-danger-soft-alt);
+  color: var(--ambulance-management-danger-text);
   line-height: 1.5;
 }
 
@@ -89,10 +108,10 @@ textarea {
   padding: 0.8rem 0.9rem;
   border: 1px solid #c9d9e2;
   border-radius: 0.85rem;
-  background: #fff;
+  background: var(--ambulance-management-bg-surface);
   box-sizing: border-box;
   font: inherit;
-  color: #173042;
+  color: var(--ambulance-management-text-strong);
 }
 
 md-outlined-select {
@@ -110,8 +129,8 @@ textarea {
 
 input:focus,
 textarea:focus {
-  outline: 2px solid rgba(15, 158, 199, 0.2);
-  border-color: #0f9ec7;
+  outline: 2px solid rgba(13, 126, 162, 0.2);
+  border-color: var(--ambulance-management-primary);
 }
 
 .notes-field {
@@ -124,8 +143,8 @@ textarea:focus {
   justify-content: flex-end;
   gap: 0.75rem;
   padding: 0.9rem 0 1.1rem;
-  background: #fff;
-  border-top: 1px solid rgba(34, 72, 95, 0.08);
+  background: var(--ambulance-management-bg-surface);
+  border-top: 1px solid var(--ambulance-management-border-soft);
 }
 
 .primary-button,
@@ -139,13 +158,13 @@ textarea:focus {
 }
 
 .primary-button {
-  color: #fff;
-  background: #0d7ea2;
+  color: var(--ambulance-management-primary-text);
+  background: var(--ambulance-management-primary);
 }
 
 .secondary-button {
-  color: #1c4258;
-  background: #e7f0f5;
+  color: var(--ambulance-management-text-secondary-action);
+  background: var(--ambulance-management-bg-surface-alt);
 }
 
 .primary-button:disabled,

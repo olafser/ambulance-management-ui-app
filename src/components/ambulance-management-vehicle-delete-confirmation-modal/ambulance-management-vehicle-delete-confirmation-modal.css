@@ -10,15 +10,15 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: rgba(7, 21, 30, 0.5);
+  background: var(--ambulance-management-bg-overlay-strong);
   backdrop-filter: blur(4px);
 }
 
 .confirm-shell {
   width: min(100%, 28rem);
   border-radius: 1.2rem;
-  background: #fff;
-  box-shadow: 0 28px 70px rgba(7, 21, 30, 0.28);
+  background: var(--ambulance-management-bg-surface);
+  box-shadow: var(--ambulance-management-shadow-modal-strong);
 }
 
 .confirm-content {
@@ -34,7 +34,7 @@
   letter-spacing: 0.08em;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #2f6b8a;
+  color: var(--ambulance-management-primary);
 }
 
 h3,
@@ -43,20 +43,20 @@ h3,
 }
 
 h3 {
-  color: #0f2735;
+  color: var(--ambulance-management-text-title);
 }
 
 .description {
-  color: #4f6b7a;
+  color: var(--ambulance-management-text-body-alt);
   line-height: 1.5;
 }
 
 .feedback-banner {
   padding: 0.85rem 1rem;
-  border: 1px solid rgba(181, 58, 58, 0.2);
+  border: 1px solid var(--ambulance-management-danger-border);
   border-radius: 1rem;
-  background: #fff1f1;
-  color: #8d2f2f;
+  background: var(--ambulance-management-danger-soft-alt);
+  color: var(--ambulance-management-danger-text);
   line-height: 1.5;
 }
 
@@ -77,18 +77,23 @@ h3 {
 }
 
 .secondary-button {
-  color: #1c4258;
-  background: #e7f0f5;
+  color: var(--ambulance-management-text-secondary-action);
+  background: var(--ambulance-management-bg-surface-alt);
 }
 
 .danger-button {
-  background: #b53a3a;
-  color: #fff;
+  background: var(--ambulance-management-danger);
+  color: var(--ambulance-management-primary-text);
+}
+
+.secondary-button,
+.danger-button {
+  font-weight: 700;
 }
 
 .danger-button:hover,
 .danger-button:focus-visible {
-  background: #9d3434;
+  background: var(--ambulance-management-danger-dark);
   outline: none;
 }
 

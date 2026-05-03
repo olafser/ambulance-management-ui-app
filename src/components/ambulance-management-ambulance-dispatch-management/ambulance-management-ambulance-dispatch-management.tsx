@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 
-import { getApiErrorMessage, listVehicles } from '../../api/ambulance-management/client';
+import { getApiErrorMessage, listVehicles, updateVehicleStatus } from '../../api/ambulance-management/client';
 import { createDispatch, deleteDispatch, listDispatches, updateDispatch, updateDispatchStatus } from '../../api/ambulance-management/dispatch-client';
 import {
   createEmptyDispatchDraft,
@@ -12,7 +12,7 @@ import {
   type DispatchRecord,
   type DispatchStatus,
 } from '../../types/dispatch';
-import type { VehicleRecord } from '../../types/vehicle';
+import type { VehicleRecord, VehicleStatus } from '../../types/vehicle';
 
 @Component({
   tag: 'ambulance-management-ambulance-dispatch-management',
@@ -119,8 +119,19 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
   }
 
   private openDeleteConfirmation(dispatchId: number) {
-    this.dispatchPendingDeletion = this.dispatches.find((dispatch) => dispatch.id === dispatchId) ?? null;
+    const dispatch = this.dispatches.find((item) => item.id === dispatchId) ?? null;
+    if (!dispatch || dispatch.status !== 'COMPLETED') {
+      this.deleteError = 'Only completed dispatches can be deleted.';
+      this.dispatchPendingDeletion = null;
+      return;
+    }
+
+    this.dispatchPendingDeletion = dispatch;
     this.deleteError = '';
+  }
+
+  private canDeleteDispatch(dispatch: DispatchRecord) {
+    return dispatch.status === 'COMPLETED';
   }
 
   private closeDeleteConfirmation() {
@@ -146,17 +157,52 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
     };
   }
 
-  private getEligibleAmbulanceOptions(selectedCallSign = '') {
-    const eligibleVehicles = this.dispatchVehicles.filter(
-      (vehicle) => vehicle.status === 'AVAILABLE' || vehicle.status === 'ON_MISSION',
-    );
+  private getCreateAmbulanceOptions() {
+    return this.dispatchVehicles.filter((vehicle) => vehicle.status === 'AVAILABLE');
+  }
 
-    if (!selectedCallSign || eligibleVehicles.some((vehicle) => vehicle.callSign === selectedCallSign)) {
-      return eligibleVehicles;
+  private getEditAmbulanceOptions(selectedCallSign = '') {
+    const availableVehicles = this.getCreateAmbulanceOptions();
+
+    if (!selectedCallSign || availableVehicles.some((vehicle) => vehicle.callSign === selectedCallSign)) {
+      return availableVehicles;
     }
 
     const selectedVehicle = this.dispatchVehicles.find((vehicle) => vehicle.callSign === selectedCallSign);
-    return selectedVehicle ? [selectedVehicle, ...eligibleVehicles] : eligibleVehicles;
+    return selectedVehicle ? [selectedVehicle, ...availableVehicles] : availableVehicles;
+  }
+
+  private getVehicleStatusForDispatchStatus(status: DispatchStatus): VehicleStatus {
+    return status === 'COMPLETED' ? 'AVAILABLE' : 'ON_MISSION';
+  }
+
+  private async syncDispatchVehicleStatus(
+    previousDispatch: Pick<DispatchRecord, 'ambulanceCallSign' | 'status'> | null,
+    nextDispatch: Pick<DispatchRecord, 'ambulanceCallSign' | 'status'>,
+  ) {
+    const previousCallSign = previousDispatch?.ambulanceCallSign.trim() ?? '';
+    const nextCallSign = nextDispatch.ambulanceCallSign.trim();
+    const nextVehicleStatus = this.getVehicleStatusForDispatchStatus(nextDispatch.status);
+
+    if (!previousCallSign && !nextCallSign) {
+      return;
+    }
+
+    if (previousCallSign && previousCallSign !== nextCallSign) {
+      const previousVehicle = this.dispatchVehicles.find((vehicle) => vehicle.callSign === previousCallSign);
+      if (previousVehicle) {
+        await updateVehicleStatus(previousVehicle.id, 'AVAILABLE', this.apiBase);
+      }
+    }
+
+    if (nextCallSign) {
+      const nextVehicle = this.dispatchVehicles.find((vehicle) => vehicle.callSign === nextCallSign);
+      if (nextVehicle) {
+        await updateVehicleStatus(nextVehicle.id, nextVehicleStatus, this.apiBase);
+      }
+    }
+
+    await this.loadDispatchVehicles();
   }
 
   private async saveDispatch(draft: DispatchDraft) {
@@ -166,6 +212,10 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
 
     this.isSaving = true;
     this.mutationError = '';
+    const previousDispatch =
+      this.modalMode === 'edit' && this.selectedDispatch
+        ? { ambulanceCallSign: this.selectedDispatch.ambulanceCallSign, status: this.selectedDispatch.status }
+        : null;
 
     try {
       const savedDispatch =
@@ -184,6 +234,11 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
       );
       this.selectedDispatchId = savedDispatch.id;
       this.modalMode = 'view';
+
+      await this.syncDispatchVehicleStatus(previousDispatch, {
+        ambulanceCallSign: savedDispatch.ambulanceCallSign,
+        status: savedDispatch.status,
+      });
     } catch (error) {
       this.mutationError = await getApiErrorMessage(error, 'Unable to save dispatch.');
     } finally {
@@ -204,6 +259,17 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
       this.dispatches = this.dispatches
         .map((dispatch) => (dispatch.id === updatedDispatch.id ? updatedDispatch : dispatch))
         .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime());
+
+      await this.syncDispatchVehicleStatus(
+        {
+          ambulanceCallSign: this.selectedDispatch.ambulanceCallSign,
+          status: this.selectedDispatch.status,
+        },
+        {
+          ambulanceCallSign: updatedDispatch.ambulanceCallSign,
+          status: updatedDispatch.status,
+        },
+      );
     } catch (error) {
       this.statusError = await getApiErrorMessage(error, 'Unable to update dispatch status.');
     } finally {
@@ -229,7 +295,7 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
 
       this.dispatchPendingDeletion = null;
     } catch (error) {
-      this.deleteError = await getApiErrorMessage(error, 'Unable to cancel dispatch.');
+      this.deleteError = await getApiErrorMessage(error, 'Unable to delete dispatch.');
     } finally {
       this.isDeleting = false;
     }
@@ -320,7 +386,11 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
                       <button
                         class="delete-button"
                         type="button"
-                        aria-label={`Cancel dispatch ${dispatch.incidentNumber}`}
+                        disabled={!this.canDeleteDispatch(dispatch)}
+                        title={
+                          this.canDeleteDispatch(dispatch) ? `Delete dispatch ${dispatch.incidentNumber}` : 'Only completed dispatches can be deleted'
+                        }
+                        aria-label={`Delete dispatch ${dispatch.incidentNumber}`}
                         onClick={(event) => {
                           event.stopPropagation();
                           this.openDeleteConfirmation(dispatch.id);
@@ -365,7 +435,11 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
       <ambulance-management-dispatch-form-modal
         mode={formMode}
         initialDraft={formMode === 'edit' && this.selectedDispatch ? this.toDraft(this.selectedDispatch) : createEmptyDispatchDraft()}
-        ambulanceOptions={this.getEligibleAmbulanceOptions(this.selectedDispatch?.ambulanceCallSign ?? '')}
+        ambulanceOptions={
+          formMode === 'create'
+            ? this.getCreateAmbulanceOptions()
+            : this.getEditAmbulanceOptions(this.selectedDispatch?.ambulanceCallSign ?? '')
+        }
         errorMessage={this.mutationError}
         isSubmitting={this.isSaving}
         onCloseRequest={() => this.closeModal()}
@@ -400,10 +474,9 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
                 Create ambulance missions, track their progress, review historical interventions, and cancel mistaken dispatches.
               </p>
             </div>
-            <md-filled-button disabled={this.isLoading} onClick={() => this.openCreateModal()}>
-              <md-icon slot="icon">add</md-icon>
-              New dispatch
-            </md-filled-button>
+            <button class="create-button" type="button" disabled={this.isLoading} onClick={() => this.openCreateModal()}>
+              Add new dispatch
+            </button>
           </div>
 
           {this.isLoading ? <md-linear-progress indeterminate></md-linear-progress> : null}

@@ -74,8 +74,9 @@ export class AmbulanceManagementDispatchFormModal {
           class="material-select"
           label="Ambulance call sign"
           required
+          disabled={this.mode === 'edit'}
           menu-positioning="fixed"
-          supporting-text="Available and on mission ambulances only"
+          supporting-text={this.mode === 'create' ? 'Available ambulances only' : 'Ambulance is fixed after creation'}
           onInput={(event) => this.updateDraft('ambulanceCallSign', (event.target as SelectLikeTarget).value)}
         >
           {hasOptions ? (
@@ -185,8 +186,8 @@ export class AmbulanceManagementDispatchFormModal {
                       <md-select-option value="ACCEPTED" selected={this.draft.status === 'ACCEPTED'}>
                         {DISPATCH_STATUS_LABELS.ACCEPTED}
                       </md-select-option>
-                      <md-select-option value="EN_ROUTE" selected={this.draft.status === 'EN_ROUTE'}>
-                        {DISPATCH_STATUS_LABELS.EN_ROUTE}
+                      <md-select-option value="ON_ROUTE" selected={this.draft.status === 'ON_ROUTE'}>
+                        {DISPATCH_STATUS_LABELS.ON_ROUTE}
                       </md-select-option>
                       <md-select-option value="ON_SCENE" selected={this.draft.status === 'ON_SCENE'}>
                         {DISPATCH_STATUS_LABELS.ON_SCENE}
@@ -212,9 +213,9 @@ export class AmbulanceManagementDispatchFormModal {
                 <md-outlined-button disabled={this.isSubmitting} onClick={() => this.closeRequest.emit()}>
                   Cancel
                 </md-outlined-button>
-                <md-filled-tonal-button disabled={this.isSubmitting} type="submit">
+                <md-filled-button disabled={this.isSubmitting} type="submit">
                   {this.isSubmitting ? 'Saving...' : 'Save dispatch'}
-                </md-filled-tonal-button>
+                </md-filled-button>
               </div>
             </form>
           </div>

@@ -1,5 +1,24 @@
 :host {
   display: block;
+  --md-sys-color-primary: var(--ambulance-management-primary);
+  --md-sys-color-on-primary: var(--ambulance-management-primary-text);
+  --md-sys-color-primary-container: var(--ambulance-management-primary-soft);
+  --md-sys-color-on-primary-container: var(--ambulance-management-primary-dark);
+  --md-sys-color-outline: var(--ambulance-management-primary-outline);
+}
+
+md-filled-button {
+  --md-filled-button-container-color: var(--ambulance-management-primary);
+  --md-filled-button-label-text-color: var(--ambulance-management-primary-text);
+  --md-filled-button-hover-state-layer-color: rgba(255, 255, 255, 0.14);
+  font-weight: 700;
+}
+
+md-outlined-button {
+  --md-outlined-button-outline-color: var(--ambulance-management-primary-outline);
+  --md-outlined-button-label-text-color: var(--ambulance-management-primary);
+  --md-outlined-button-hover-state-layer-color: var(--ambulance-management-primary-subtle);
+  font-weight: 700;
 }
 
 .modal-backdrop {
@@ -10,14 +29,14 @@
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  background: rgba(16, 32, 43, 0.48);
+  background: var(--ambulance-management-bg-overlay);
 }
 
 .confirm-shell {
   width: min(480px, 100%);
   border-radius: 1.4rem;
-  background: #ffffff;
-  box-shadow: 0 28px 60px rgba(9, 28, 41, 0.24);
+  background: var(--ambulance-management-bg-surface);
+  box-shadow: var(--ambulance-management-shadow-modal);
 }
 
 .confirm-content {
@@ -33,7 +52,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #b0481f;
+  color: var(--ambulance-management-danger-eyebrow);
 }
 
 h3,
@@ -42,15 +61,15 @@ h3,
 }
 
 .description {
-  color: #4c6878;
+  color: var(--ambulance-management-text-body);
 }
 
 .feedback-banner {
   padding: 0.85rem 1rem;
   border-radius: 0.9rem;
-  color: #8b2f16;
-  background: rgba(255, 244, 239, 0.98);
-  border: 1px solid rgba(139, 47, 22, 0.15);
+  color: var(--ambulance-management-danger-strong);
+  background: var(--ambulance-management-danger-soft-strong);
+  border: 1px solid var(--ambulance-management-danger-border-strong);
 }
 
 .modal-actions {
@@ -60,8 +79,8 @@ h3,
 }
 
 .danger-action {
-  --md-filled-button-container-color: #b2381c;
-  --md-filled-button-label-text-color: #ffffff;
+  --md-filled-button-container-color: var(--ambulance-management-danger-accent);
+  --md-filled-button-label-text-color: var(--ambulance-management-primary-text);
 }
 
 @media (max-width: 560px) {

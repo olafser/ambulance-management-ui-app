@@ -3,7 +3,7 @@ import { Component, Host, Prop, State, h } from '@stencil/core';
 import { listVehicles, getApiErrorMessage } from '../../api/ambulance-management/client';
 import { listDispatches } from '../../api/ambulance-management/dispatch-client';
 import { isHistoricalDispatch, type DispatchRecord } from '../../types/dispatch';
-import { VEHICLE_STATUS_LABELS, type VehicleRecord, type VehicleStatus } from '../../types/vehicle';
+import { type VehicleRecord, type VehicleStatus } from '../../types/vehicle';
 
 declare global {
   interface Window {
@@ -207,10 +207,6 @@ export class AmbulanceManagementMainContainer {
     );
   }
 
-  private renderStatusChip(label: string, value: number) {
-    return <md-suggestion-chip label={`${label}: ${value}`}></md-suggestion-chip>;
-  }
-
   private renderOverview() {
     return (
       <section class="overview">
@@ -223,16 +219,6 @@ export class AmbulanceManagementMainContainer {
             </p>
           </div>
 
-          <div class="overview-actions">
-            <md-filled-tonal-button onClick={() => this.navigate('./paramedic-vehicle-management')}>
-              <md-icon slot="icon">local_shipping</md-icon>
-              Vehicle management
-            </md-filled-tonal-button>
-            <md-outlined-button onClick={() => this.navigate('./ambulance-dispatch-management')}>
-              <md-icon slot="icon">emergency</md-icon>
-              Dispatch management
-            </md-outlined-button>
-          </div>
         </div>
 
         {this.isOverviewLoading ? <md-linear-progress indeterminate></md-linear-progress> : null}
@@ -251,14 +237,15 @@ export class AmbulanceManagementMainContainer {
           <section class="overview-panel vehicle-panel">
             <div class="panel-header">
               <div>
-                <p class="panel-label">Module 01</p>
                 <h2>Paramedic Vehicle Management</h2>
                 <p class="panel-copy">Monitor fleet readiness, availability, and operational state across the ambulance pool.</p>
               </div>
-              <md-filled-tonal-button onClick={() => this.navigate('./paramedic-vehicle-management')}>
-                <md-icon slot="icon">local_shipping</md-icon>
-                Open vehicle management
-              </md-filled-tonal-button>
+              <button class="action-button" type="button" onClick={() => this.navigate('./paramedic-vehicle-management')}>
+                <md-icon class="action-icon" aria-hidden="true">
+                  local_shipping
+                </md-icon>
+                <span>Open vehicle management</span>
+              </button>
             </div>
 
             <div class="metric-grid">
@@ -268,25 +255,20 @@ export class AmbulanceManagementMainContainer {
               {this.renderOverviewMetric('In service', String(this.vehicleStatusCounts.IN_SERVICE))}
               {this.renderOverviewMetric('Out of service', String(this.vehicleStatusCounts.OUT_OF_SERVICE))}
             </div>
-
-            <div class="status-list">
-              {(['AVAILABLE', 'ON_MISSION', 'IN_SERVICE', 'OUT_OF_SERVICE'] as VehicleStatus[]).map((status) =>
-                this.renderStatusChip(VEHICLE_STATUS_LABELS[status], this.vehicleStatusCounts[status]),
-              )}
-            </div>
           </section>
 
           <section class="overview-panel dispatch-panel">
             <div class="panel-header">
               <div>
-                <p class="panel-label">Module 02</p>
                 <h2>Ambulance Dispatch Management</h2>
                 <p class="panel-copy">Track current interventions, completed missions, and operational dispatch workload in one place.</p>
               </div>
-              <md-outlined-button onClick={() => this.navigate('./ambulance-dispatch-management')}>
-                <md-icon slot="icon">emergency</md-icon>
-                Open dispatch management
-              </md-outlined-button>
+              <button class="action-button" type="button" onClick={() => this.navigate('./ambulance-dispatch-management')}>
+                <md-icon class="action-icon" aria-hidden="true">
+                  medical_services
+                </md-icon>
+                <span>Open dispatch management</span>
+              </button>
             </div>
 
             <div class="metric-grid">
@@ -295,12 +277,6 @@ export class AmbulanceManagementMainContainer {
               {this.renderOverviewMetric('Historical dispatches', String(this.historicalDispatchCount))}
             </div>
 
-            <div class="summary-copy">
-              <p>
-                Use the vehicle module to manage fleet readiness and the dispatch module to track interventions from accepted call
-                through completion.
-              </p>
-            </div>
           </section>
         </div>
       </section>

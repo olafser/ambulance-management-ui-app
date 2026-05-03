@@ -111,7 +111,11 @@ export class AmbulanceManagementVehicleFormModal {
                     <md-outlined-select
                       class="material-select"
                       label="Status"
+                      disabled={this.draft.status === 'ON_MISSION'}
                       menu-positioning="fixed"
+                      supporting-text={
+                        this.draft.status === 'ON_MISSION' ? 'Status is controlled from dispatch management' : undefined
+                      }
                       onInput={(event) =>
                         this.updateDraft('status', (event.target as SelectLikeTarget).value as VehicleStatus)
                       }
@@ -140,9 +144,9 @@ export class AmbulanceManagementVehicleFormModal {
                 <md-outlined-button disabled={this.isSubmitting} onClick={() => this.closeRequest.emit()}>
                   Cancel
                 </md-outlined-button>
-                <md-filled-tonal-button type="submit" disabled={this.isSubmitting}>
+                <md-filled-button type="submit" disabled={this.isSubmitting}>
                   {this.isSubmitting ? 'Saving...' : 'Save vehicle'}
-                </md-filled-tonal-button>
+                </md-filled-button>
               </div>
             </form>
           </div>

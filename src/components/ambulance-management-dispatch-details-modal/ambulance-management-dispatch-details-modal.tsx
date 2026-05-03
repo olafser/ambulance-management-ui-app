@@ -131,7 +131,7 @@ export class AmbulanceManagementDispatchDetailsModal {
 
               <div class="modal-actions">
                 <md-outlined-button onClick={() => this.closeRequest.emit()}>Close</md-outlined-button>
-                <md-filled-button onClick={() => this.editRequest.emit()}>Edit dispatch</md-filled-button>
+                <md-filled-button onClick={() => this.editRequest.emit()}>Edit</md-filled-button>
               </div>
             </div>
           </div>

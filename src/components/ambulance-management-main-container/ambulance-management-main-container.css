@@ -3,15 +3,76 @@
   --ambulance-management-primary: #0d7ea2;
   --ambulance-management-primary-dark: #0b6f8f;
   --ambulance-management-primary-soft: rgba(13, 126, 162, 0.12);
+  --ambulance-management-primary-subtle: rgba(13, 126, 162, 0.08);
+  --ambulance-management-primary-outline: rgba(13, 126, 162, 0.28);
   --ambulance-management-primary-text: #ffffff;
+  --ambulance-management-bg-app: #edf3f7;
+  --ambulance-management-bg-surface: #ffffff;
+  --ambulance-management-bg-surface-muted: #f7fafc;
+  --ambulance-management-bg-surface-soft: #f6fafc;
+  --ambulance-management-bg-surface-alt: #e7f0f5;
+  --ambulance-management-bg-overlay: rgba(16, 32, 43, 0.48);
+  --ambulance-management-bg-overlay-strong: rgba(7, 21, 30, 0.5);
+  --ambulance-management-text-strong: #143042;
+  --ambulance-management-text-heading: #133346;
+  --ambulance-management-text-heading-alt: #16384d;
+  --ambulance-management-text-title: #0f2735;
+  --ambulance-management-text-body: #4c6878;
+  --ambulance-management-text-body-alt: #4f6b7a;
+  --ambulance-management-text-muted: #5a7484;
+  --ambulance-management-text-muted-alt: #597483;
+  --ambulance-management-text-soft: #426174;
+  --ambulance-management-text-secondary-action: #1c4258;
+  --ambulance-management-border-soft: rgba(22, 56, 77, 0.08);
+  --ambulance-management-border-default: rgba(22, 56, 77, 0.1);
+  --ambulance-management-border-strong: rgba(22, 56, 77, 0.16);
+  --ambulance-management-shadow-soft: 0 16px 34px rgba(20, 48, 66, 0.05);
+  --ambulance-management-shadow-card: 0 18px 42px rgba(20, 48, 66, 0.08);
+  --ambulance-management-shadow-panel: 0 24px 60px rgba(20, 48, 66, 0.08);
+  --ambulance-management-shadow-modal: 0 28px 60px rgba(9, 28, 41, 0.24);
+  --ambulance-management-shadow-modal-strong: 0 28px 70px rgba(7, 21, 30, 0.28);
+  --ambulance-management-danger: #b53a3a;
+  --ambulance-management-danger-dark: #9d3434;
+  --ambulance-management-danger-strong: #8b2f16;
+  --ambulance-management-danger-text: #8d2f2f;
+  --ambulance-management-danger-soft: #fff5f5;
+  --ambulance-management-danger-soft-alt: #fff1f1;
+  --ambulance-management-danger-soft-strong: rgba(255, 244, 239, 0.98);
+  --ambulance-management-danger-border: rgba(181, 58, 58, 0.16);
+  --ambulance-management-danger-border-strong: rgba(139, 47, 22, 0.15);
+  --ambulance-management-danger-outline: #d6a5a5;
+  --ambulance-management-danger-outline-hover: #b97878;
+  --ambulance-management-danger-accent: #b2381c;
+  --ambulance-management-danger-eyebrow: #b0481f;
+  --ambulance-management-success-text: #0d6a4d;
+  --ambulance-management-success-bg: #daf5ea;
+  --ambulance-management-success-text-alt: #17663a;
+  --ambulance-management-success-bg-alt: rgba(229, 244, 235, 0.98);
+  --ambulance-management-success-text-soft: #1e6a3a;
+  --ambulance-management-success-bg-soft: rgba(232, 243, 236, 0.98);
+  --ambulance-management-warning-text: #965700;
+  --ambulance-management-warning-bg: #fff0d1;
+  --ambulance-management-warning-text-alt: #8c5900;
+  --ambulance-management-warning-bg-alt: rgba(255, 246, 219, 0.98);
+  --ambulance-management-warning-text-soft: #925400;
+  --ambulance-management-warning-bg-soft: rgba(255, 243, 222, 0.98);
+  --ambulance-management-warning-lime-text: #697200;
+  --ambulance-management-warning-lime-bg: rgba(242, 246, 220, 0.98);
+  --ambulance-management-scene-text: #5f6f00;
+  --ambulance-management-scene-bg: rgba(236, 241, 214, 0.98);
+  --ambulance-management-info-text: #14507a;
+  --ambulance-management-info-bg: rgba(224, 241, 255, 0.95);
+  --ambulance-management-info-text-soft: #0f5f8a;
+  --ambulance-management-info-bg-soft: #dceffa;
+  --ambulance-management-info-row: rgba(236, 245, 249, 0.9);
   display: flex;
   justify-content: center;
   align-items: stretch;
   width: 100%;
   min-height: 100vh;
   box-sizing: border-box;
-  background: #edf3f7;
-  color: #143042;
+  background: var(--ambulance-management-bg-app);
+  color: var(--ambulance-management-text-strong);
 }
 
 .shell {
@@ -40,7 +101,7 @@
   justify-content: center;
   gap: 1.5rem;
   padding: 0.35rem 1.25rem;
-  border-bottom: 1px solid rgba(22, 56, 77, 0.1);
+  border-bottom: 1px solid var(--ambulance-management-border-default);
 }
 
 .nav-link {
@@ -48,16 +109,16 @@
   padding: 0.35rem 0;
   border: 0;
   background: transparent;
-  color: #4f6a79;
+  color: var(--ambulance-management-text-body-alt);
   font: inherit;
   font-size: 0.98rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: color 160ms ease;
 }
 
 .nav-link:hover {
-  color: #16384d;
+  color: var(--ambulance-management-text-heading-alt);
 }
 
 .nav-link::after {
@@ -73,7 +134,7 @@
 }
 
 .nav-link.active {
-  color: #16384d;
+  color: var(--ambulance-management-text-heading-alt);
 }
 
 .nav-link.active::after {
@@ -92,10 +153,10 @@
   padding: 1.6rem;
   border-radius: 1.2rem;
   background:
-    radial-gradient(circle at top right, rgba(208, 235, 247, 0.92), transparent 22rem),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 250, 252, 0.98));
-  border: 1px solid rgba(22, 56, 77, 0.08);
-  box-shadow: 0 18px 42px rgba(20, 48, 66, 0.08);
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(240, 247, 251, 0.92)),
+    radial-gradient(circle at right top, rgba(49, 130, 206, 0.08), transparent 40%);
+  border: 1px solid var(--ambulance-management-border-soft);
+  box-shadow: var(--ambulance-management-shadow-card);
 }
 
 .overview-hero,
@@ -125,24 +186,38 @@
   min-width: 15rem;
 }
 
-.overview-actions md-filled-tonal-button {
-  --md-filled-tonal-button-container-color: var(--ambulance-management-primary-soft);
-  --md-filled-tonal-button-label-text-color: var(--ambulance-management-primary-dark);
-  --md-filled-tonal-button-hover-state-layer-color: rgba(13, 126, 162, 0.08);
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.85rem 1.2rem;
+  font: inherit;
   font-size: 1rem;
   font-weight: 700;
+  line-height: 1.2;
+  color: var(--ambulance-management-primary-text);
+  background: var(--ambulance-management-primary);
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease,
+    box-shadow 120ms ease;
 }
 
-.overview-actions md-outlined-button {
-  --md-outlined-button-outline-color: rgba(13, 126, 162, 0.28);
-  --md-outlined-button-label-text-color: var(--ambulance-management-primary);
-  --md-outlined-button-hover-state-layer-color: rgba(13, 126, 162, 0.08);
-  font-size: 1rem;
-  font-weight: 700;
+.action-button:hover,
+.action-button:focus-visible {
+  transform: translateY(-1px);
+  background: var(--ambulance-management-primary-dark);
+  outline: none;
 }
 
-.overview-label,
-.panel-label {
+.action-icon {
+  color: var(--ambulance-management-primary-text);
+}
+
+.overview-label {
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -159,7 +234,7 @@
 
 .overview-text {
   margin: 0;
-  color: #426174;
+  color: var(--ambulance-management-text-soft);
 }
 
 .overview-feedback {
@@ -169,9 +244,9 @@
   gap: 1rem;
   padding: 1rem 1.1rem;
   border-radius: 1rem;
-  background: rgba(255, 244, 239, 0.98);
-  border: 1px solid rgba(139, 47, 22, 0.15);
-  color: #8b2f16;
+  background: var(--ambulance-management-danger-soft-strong);
+  border: 1px solid var(--ambulance-management-danger-border-strong);
+  color: var(--ambulance-management-danger-strong);
 }
 
 .overview-grid {
@@ -186,24 +261,28 @@
   padding: 1.35rem;
   border-radius: 1.15rem;
   background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(22, 56, 77, 0.08);
-  box-shadow: 0 16px 34px rgba(20, 48, 66, 0.05);
+  border: 1px solid var(--ambulance-management-border-soft);
+  box-shadow: var(--ambulance-management-shadow-soft);
 }
 
 .vehicle-panel {
   background:
-    radial-gradient(circle at top right, rgba(13, 126, 162, 0.1), transparent 18rem),
-    rgba(255, 255, 255, 0.97);
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(240, 247, 251, 0.92)),
+    radial-gradient(circle at right top, rgba(49, 130, 206, 0.08), transparent 40%);
 }
 
 .dispatch-panel {
   background:
-    radial-gradient(circle at top right, rgba(10, 116, 146, 0.08), transparent 18rem),
-    rgba(255, 255, 255, 0.97);
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(240, 247, 251, 0.92)),
+    radial-gradient(circle at right top, rgba(49, 130, 206, 0.08), transparent 40%);
 }
 
 .panel-header {
   align-items: flex-start;
+}
+
+.panel-header .action-button {
+  align-self: flex-start;
 }
 
 .panel-header h2,
@@ -213,13 +292,13 @@
 
 .panel-header h2 {
   font-size: clamp(1.3rem, 2vw, 1.7rem);
-  color: #133346;
+  color: var(--ambulance-management-text-heading);
 }
 
 .panel-copy {
   margin: 0.45rem 0 0;
   max-width: 42rem;
-  color: #4d6978;
+  color: var(--ambulance-management-text-body);
   line-height: 1.5;
 }
 
@@ -232,9 +311,9 @@
 }
 
 .panel-header md-outlined-button {
-  --md-outlined-button-outline-color: rgba(13, 126, 162, 0.28);
+  --md-outlined-button-outline-color: var(--ambulance-management-primary-outline);
   --md-outlined-button-label-text-color: var(--ambulance-management-primary);
-  --md-outlined-button-hover-state-layer-color: rgba(13, 126, 162, 0.08);
+  --md-outlined-button-hover-state-layer-color: var(--ambulance-management-primary-subtle);
   font-size: 0.98rem;
   font-weight: 700;
 }
@@ -251,8 +330,8 @@
   gap: 0.35rem;
   padding: 0.95rem 1rem;
   border-radius: 1rem;
-  background: #f6fafc;
-  border: 1px solid rgba(22, 56, 77, 0.08);
+  background: var(--ambulance-management-bg-surface-soft);
+  border: 1px solid var(--ambulance-management-border-soft);
 }
 
 .overview-metric.accent {
@@ -264,30 +343,13 @@
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #597483;
+  color: var(--ambulance-management-text-muted-alt);
 }
 
 .overview-metric-value {
   font-size: 1.9rem;
   line-height: 1;
-  color: #143042;
-}
-
-.status-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-md-suggestion-chip {
-  --md-suggestion-chip-container-height: 2.5rem;
-  --md-suggestion-chip-label-text-color: #143042;
-  --md-suggestion-chip-outline-color: rgba(13, 126, 162, 0.18);
-  --md-suggestion-chip-hover-state-layer-color: rgba(13, 126, 162, 0.12);
-}
-
-.summary-copy p {
-  color: #4b6878;
+  color: var(--ambulance-management-text-strong);
 }
 
 @media (max-width: 900px) {
@@ -308,4 +370,3 @@ md-suggestion-chip {
     padding: 1.15rem;
   }
 }
-
