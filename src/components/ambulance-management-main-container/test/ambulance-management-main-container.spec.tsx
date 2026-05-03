@@ -1,5 +1,14 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+jest.mock('../../../api/ambulance-management/client', () => ({
+  getApiErrorMessage: jest.fn(async (_error: unknown, fallbackMessage: string) => fallbackMessage),
+  listVehicles: jest.fn(async () => []),
+}));
+
+jest.mock('../../../api/ambulance-management/dispatch-client', () => ({
+  listDispatches: jest.fn(async () => []),
+}));
+
 import { AmbulanceManagementAmbulanceDispatchManagement } from '../../ambulance-management-ambulance-dispatch-management/ambulance-management-ambulance-dispatch-management';
 import { AmbulanceManagementMainContainer } from '../ambulance-management-main-container';
 import { AmbulanceManagementParamedicVehicleManagement } from '../../ambulance-management-paramedic-vehicle-management/ambulance-management-paramedic-vehicle-management';
@@ -16,7 +25,8 @@ describe('ambulance-management-main-container', () => {
       html: '<ambulance-management-main-container base-path="/ambulance-management/"></ambulance-management-main-container>',
     });
 
-    expect(page.root?.shadowRoot?.textContent).toContain('Choose a section from the navigation bar to continue.');
+    expect(page.root?.shadowRoot?.textContent).toContain('Operations dashboard');
+    expect(page.root?.shadowRoot?.textContent).toContain('Ambulance Management');
   });
 
   it('renders paramedic vehicle management from the route', async () => {

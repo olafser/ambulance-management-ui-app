@@ -13,7 +13,7 @@ import {
 
 import type { VehicleDraft, VehicleRecord } from '../../types/vehicle';
 
-const DEFAULT_API_BASE = 'http://localhost:8080/api';
+const DEFAULT_API_BASE = '/api';
 
 const createApiClient = (apiBase: string = DEFAULT_API_BASE) =>
   new VehicleManagementApi(
