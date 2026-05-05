@@ -126,6 +126,11 @@ export class AmbulanceManagementParamedicVehicleManagement {
       return;
     }
 
+    if (draft.status === 'ON_MISSION') {
+      this.mutationError = 'Vehicles can only be moved to On mission from dispatch management.';
+      return;
+    }
+
     this.isSaving = true;
     this.mutationError = '';
 

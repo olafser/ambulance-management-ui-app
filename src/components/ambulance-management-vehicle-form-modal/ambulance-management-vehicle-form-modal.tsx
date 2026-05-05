@@ -52,6 +52,10 @@ export class AmbulanceManagementVehicleFormModal {
     this.saveRequest.emit(this.draft);
   }
 
+  private get isDispatchControlledStatus() {
+    return this.draft.status === 'ON_MISSION';
+  }
+
   private renderTextField(
     label: string,
     field: keyof VehicleDraft,
@@ -111,20 +115,15 @@ export class AmbulanceManagementVehicleFormModal {
                     <md-outlined-select
                       class="material-select"
                       label="Status"
-                      disabled={this.draft.status === 'ON_MISSION'}
+                      disabled={this.isDispatchControlledStatus}
                       menu-positioning="fixed"
-                      supporting-text={
-                        this.draft.status === 'ON_MISSION' ? 'Status is controlled from dispatch management' : undefined
-                      }
+                      supporting-text={this.isDispatchControlledStatus ? 'Status is controlled from dispatch management' : undefined}
                       onInput={(event) =>
                         this.updateDraft('status', (event.target as SelectLikeTarget).value as VehicleStatus)
                       }
                     >
                       <md-select-option value="AVAILABLE" selected={this.draft.status === 'AVAILABLE'}>
                         {VEHICLE_STATUS_LABELS.AVAILABLE}
-                      </md-select-option>
-                      <md-select-option value="ON_MISSION" selected={this.draft.status === 'ON_MISSION'}>
-                        {VEHICLE_STATUS_LABELS.ON_MISSION}
                       </md-select-option>
                       <md-select-option value="OUT_OF_SERVICE" selected={this.draft.status === 'OUT_OF_SERVICE'}>
                         {VEHICLE_STATUS_LABELS.OUT_OF_SERVICE}
