@@ -1,3 +1,4 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './AmbulanceManagementApi';
+export * from './DispatchManagementApi';
+export * from './VehicleManagementApi';

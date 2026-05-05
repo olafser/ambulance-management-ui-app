@@ -41,7 +41,7 @@ md-outlined-button {
   box-shadow: var(--ambulance-management-shadow-modal);
 }
 
-.vehicle-form {
+.dispatch-form {
   display: flex;
   flex-direction: column;
 }
@@ -56,23 +56,17 @@ md-outlined-button {
 }
 
 .eyebrow {
-  margin: 0 0 0.35rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.75rem;
+  margin: 0 0 0.3rem;
+  font-size: 0.76rem;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--ambulance-management-primary);
 }
 
-h3 {
+.modal-header h3 {
   margin: 0;
-  color: var(--ambulance-management-text-title);
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  color: var(--ambulance-management-text-strong);
 }
 
 .form-body {
@@ -88,6 +82,12 @@ h3 {
   color: var(--ambulance-management-danger-strong);
   background: var(--ambulance-management-danger-soft-strong);
   border: 1px solid var(--ambulance-management-danger-border-strong);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
 }
 
 label {
@@ -138,28 +138,12 @@ textarea:focus {
   border-top: 1px solid var(--ambulance-management-border-soft);
 }
 
-.primary-button,
-.secondary-button {
-  border: 0;
-  border-radius: 999px;
-  padding: 0.8rem 1.25rem;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
+@media (max-width: 720px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 
-.primary-button {
-  color: var(--ambulance-management-primary-text);
-  background: var(--ambulance-management-primary);
-}
-
-.secondary-button {
-  color: var(--ambulance-management-text-secondary-action);
-  background: var(--ambulance-management-bg-surface-alt);
-}
-
-.primary-button:disabled,
-.secondary-button:disabled {
-  cursor: wait;
-  opacity: 0.7;
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
 }

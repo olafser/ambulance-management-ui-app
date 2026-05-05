@@ -1,0 +1,160 @@
+:host {
+  display: block;
+  --md-sys-color-primary: var(--ambulance-management-primary);
+  --md-sys-color-on-primary: var(--ambulance-management-primary-text);
+  --md-sys-color-primary-container: var(--ambulance-management-primary-soft);
+  --md-sys-color-on-primary-container: var(--ambulance-management-primary-dark);
+  --md-sys-color-outline: var(--ambulance-management-primary-outline);
+}
+
+md-filled-button {
+  --md-filled-button-container-color: var(--ambulance-management-primary);
+  --md-filled-button-label-text-color: var(--ambulance-management-primary-text);
+  --md-filled-button-hover-state-layer-color: rgba(255, 255, 255, 0.14);
+  font-weight: 700;
+}
+
+md-outlined-button {
+  --md-outlined-button-outline-color: var(--ambulance-management-primary-outline);
+  --md-outlined-button-label-text-color: var(--ambulance-management-primary);
+  --md-outlined-button-hover-state-layer-color: var(--ambulance-management-primary-subtle);
+  font-weight: 700;
+}
+
+md-outlined-select {
+  --md-outlined-select-focus-outline-color: var(--ambulance-management-primary);
+  --md-outlined-select-focus-label-text-color: var(--ambulance-management-primary);
+  --md-outlined-select-hover-outline-color: var(--ambulance-management-primary-outline);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: var(--ambulance-management-bg-overlay);
+}
+
+.modal-shell {
+  width: min(820px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  border-radius: 1.4rem;
+  background: var(--ambulance-management-bg-surface);
+  box-shadow: var(--ambulance-management-shadow-modal);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.4rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  margin: 0 0 0.3rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ambulance-management-primary);
+}
+
+.modal-header h3,
+.notes-panel p,
+.status-copy {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0.3rem 0 0;
+  color: var(--ambulance-management-text-body);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.detail-item,
+.notes-panel,
+.status-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--ambulance-management-bg-surface-muted);
+  border: 1px solid var(--ambulance-management-border-soft);
+}
+
+.detail-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ambulance-management-text-muted);
+  font-weight: 700;
+}
+
+.detail-value {
+  color: var(--ambulance-management-text-strong);
+  font-weight: 600;
+}
+
+.status-copy {
+  color: var(--ambulance-management-text-body);
+}
+
+.status-controls,
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.status-controls {
+  align-items: center;
+}
+
+md-outlined-select {
+  min-width: 16rem;
+}
+
+.feedback-banner {
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  color: var(--ambulance-management-danger-strong);
+  background: var(--ambulance-management-danger-soft-strong);
+  border: 1px solid var(--ambulance-management-danger-border-strong);
+}
+
+.modal-actions {
+  justify-content: flex-end;
+}
+
+@media (max-width: 720px) {
+  .modal-header,
+  .status-controls,
+  .modal-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  md-outlined-select {
+    min-width: 0;
+  }
+}

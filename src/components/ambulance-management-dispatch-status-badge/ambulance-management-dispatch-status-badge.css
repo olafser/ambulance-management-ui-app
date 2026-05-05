@@ -1,0 +1,23 @@
+:host {
+  display: inline-flex;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.38rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-accepted,
+.status-en-route,
+.status-on-scene,
+.status-transporting-to-hospital,
+.status-completed {
+  background: var(--ambulance-management-primary-soft);
+  color: var(--ambulance-management-primary-dark);
+}

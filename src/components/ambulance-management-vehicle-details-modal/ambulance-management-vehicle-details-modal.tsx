@@ -67,7 +67,7 @@ export class AmbulanceManagementVehicleDetailsModal {
 
               <div class="modal-actions">
                 <button class="secondary-button" type="button" onClick={() => this.closeRequest.emit()}>
-                  Close
+                  Cancel
                 </button>
                 <button class="primary-button" type="button" onClick={() => this.editRequest.emit()}>
                   Edit

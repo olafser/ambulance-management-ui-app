@@ -3,15 +3,63 @@
   width: 100%;
 }
 
+md-filled-button {
+  --md-filled-button-container-color: var(--ambulance-management-primary);
+  --md-filled-button-label-text-color: var(--ambulance-management-primary-text);
+  --md-filled-button-hover-state-layer-color: rgba(255, 255, 255, 0.14);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+md-outlined-button {
+  --md-outlined-button-outline-color: var(--ambulance-management-primary-outline);
+  --md-outlined-button-label-text-color: var(--ambulance-management-primary);
+  --md-outlined-button-hover-state-layer-color: var(--ambulance-management-primary-subtle);
+  font-weight: 700;
+}
+
+.create-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ambulance-management-primary-text);
+  background: var(--ambulance-management-primary);
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.create-button:hover,
+.create-button:focus-visible {
+  transform: translateY(-1px);
+  background: var(--ambulance-management-primary-dark);
+  outline: none;
+}
+
+.create-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+}
+
 .page {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1.25rem;
   width: 100%;
-  padding: 1.5rem;
+  padding: 1.75rem;
   border-radius: 1.5rem;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 24px 60px rgba(20, 48, 66, 0.08);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(240, 247, 251, 0.92)),
+    radial-gradient(circle at right top, rgba(49, 130, 206, 0.08), transparent 40%);
+  border: 1px solid var(--ambulance-management-border-soft);
+  box-shadow: var(--ambulance-management-shadow-panel);
   box-sizing: border-box;
 }
 
@@ -21,10 +69,270 @@
   letter-spacing: 0.08em;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #2f6b8a;
+  color: var(--ambulance-management-primary);
 }
 
-h2,
-p {
+.page-header,
+.section-header,
+.primary-cell {
+  display: flex;
+}
+
+.page-header,
+.section-header {
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.page-header h2,
+.section-header h3,
+.status-card h3 {
   margin: 0;
+}
+
+.description,
+.section-header p,
+.status-card p,
+.primary-cell span {
+  margin: 0;
+  color: var(--ambulance-management-text-body);
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.metric-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--ambulance-management-border-soft);
+}
+
+.metric-alert {
+  background: var(--ambulance-management-danger-soft);
+  border-color: var(--ambulance-management-danger-border);
+  color: var(--ambulance-management-danger-strong);
+}
+
+.metric-label {
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ambulance-management-text-muted);
+}
+
+.metric-value {
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--ambulance-management-text-strong);
+}
+
+.feedback-banner,
+.status-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--ambulance-management-border-default);
+}
+
+.feedback-banner {
+  color: var(--ambulance-management-danger-strong);
+  background: var(--ambulance-management-danger-soft-strong);
+  border-color: var(--ambulance-management-danger-border-strong);
+}
+
+.empty-state {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dispatch-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.list-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.section-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 0.65rem;
+  border-radius: 999px;
+  background: var(--ambulance-management-primary-soft);
+  color: var(--ambulance-management-primary-dark);
+  font-weight: 700;
+}
+
+.table-card {
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid var(--ambulance-management-border-soft);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.dispatch-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dispatch-table th,
+.dispatch-table td {
+  padding: 0.95rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--ambulance-management-border-soft);
+}
+
+.dispatch-table th {
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ambulance-management-text-muted);
+  background: rgba(244, 248, 250, 0.95);
+}
+
+.dispatch-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.dispatch-row {
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.dispatch-row:hover,
+.dispatch-row:focus-visible {
+  background: var(--ambulance-management-info-row);
+  outline: none;
+}
+
+.primary-cell {
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.primary-cell strong {
+  color: var(--ambulance-management-text-heading-alt);
+}
+
+.priority-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.priority-low {
+  background: var(--ambulance-management-success-bg);
+  color: var(--ambulance-management-success-text);
+}
+
+.priority-medium {
+  background: var(--ambulance-management-warning-bg);
+  color: var(--ambulance-management-warning-text);
+}
+
+.priority-high {
+  background: var(--ambulance-management-warning-bg-soft);
+  color: var(--ambulance-management-warning-text-soft);
+}
+
+.priority-critical {
+  background: #fde2e2;
+  color: var(--ambulance-management-danger-text);
+}
+
+.actions-column,
+.action-cell {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.action-cell {
+  padding-right: 0.85rem;
+}
+
+.delete-button {
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem;
+  border: 1px solid var(--ambulance-management-danger-outline);
+  border-radius: 0.55rem;
+  background: transparent;
+  color: var(--ambulance-management-danger-dark);
+  font: inherit;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.delete-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+  color: var(--ambulance-management-text-muted);
+  border-color: var(--ambulance-management-border-default);
+}
+
+.delete-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.delete-button:hover,
+.delete-button:focus-visible {
+  color: var(--ambulance-management-danger-text);
+  border-color: var(--ambulance-management-danger-outline-hover);
+  outline: none;
+}
+
+@media (max-width: 960px) {
+  .page-header,
+  .section-header,
+  .feedback-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .table-card {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 1.2rem;
+  }
+
+  .dispatch-table th,
+  .dispatch-table td {
+    padding: 0.8rem 0.85rem;
+  }
 }
