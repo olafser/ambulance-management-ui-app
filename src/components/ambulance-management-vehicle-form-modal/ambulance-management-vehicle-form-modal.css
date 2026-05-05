@@ -1,5 +1,5 @@
 :host {
-  display: contents;
+  display: block;
   --md-sys-color-primary: var(--ambulance-management-primary);
   --md-sys-color-on-primary: var(--ambulance-management-primary-text);
   --md-sys-color-primary-container: var(--ambulance-management-primary-soft);
@@ -24,39 +24,35 @@ md-outlined-button {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 10;
+  z-index: 50;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   padding: 1rem;
-  background: var(--ambulance-management-bg-overlay-strong);
-  backdrop-filter: blur(4px);
+  background: var(--ambulance-management-bg-overlay);
 }
 
 .modal-shell {
-  width: min(100%, 52rem);
+  width: min(920px, 100%);
   max-height: calc(100vh - 2rem);
+  overflow: auto;
   border-radius: 1.4rem;
   background: var(--ambulance-management-bg-surface);
-  box-shadow: var(--ambulance-management-shadow-modal-strong);
-  overflow: hidden;
+  box-shadow: var(--ambulance-management-shadow-modal);
 }
 
 .vehicle-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  height: min(100%, calc(100vh - 2rem));
-  max-height: calc(100vh - 2rem);
-  padding: 1.1rem 1.1rem 0;
-  box-sizing: border-box;
+}
+
+.modal-header,
+.modal-actions {
+  padding: 1.25rem 1.4rem;
 }
 
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
+  border-bottom: 1px solid var(--ambulance-management-border-soft);
 }
 
 .eyebrow {
@@ -80,19 +76,18 @@ h3 {
 }
 
 .form-body {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  padding: 0 0.15rem 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem 1.4rem;
 }
 
 .feedback-banner {
-  margin-bottom: 1rem;
   padding: 0.85rem 1rem;
-  border: 1px solid var(--ambulance-management-danger-border);
-  border-radius: 1rem;
-  background: var(--ambulance-management-danger-soft-alt);
-  color: var(--ambulance-management-danger-text);
-  line-height: 1.5;
+  border-radius: 0.9rem;
+  color: var(--ambulance-management-danger-strong);
+  background: var(--ambulance-management-danger-soft-strong);
+  border: 1px solid var(--ambulance-management-danger-border-strong);
 }
 
 label {
@@ -106,12 +101,12 @@ select,
 textarea {
   width: 100%;
   padding: 0.8rem 0.9rem;
-  border: 1px solid #c9d9e2;
-  border-radius: 0.85rem;
-  background: var(--ambulance-management-bg-surface);
-  box-sizing: border-box;
-  font: inherit;
+  border-radius: 0.9rem;
+  border: 1px solid var(--ambulance-management-border-strong);
+  background: var(--ambulance-management-bg-surface-muted);
   color: var(--ambulance-management-text-strong);
+  font: inherit;
+  box-sizing: border-box;
 }
 
 md-outlined-select {
@@ -124,12 +119,11 @@ md-outlined-text-field {
 
 textarea {
   resize: vertical;
-  min-height: 7rem;
 }
 
 input:focus,
 textarea:focus {
-  outline: 2px solid rgba(13, 126, 162, 0.2);
+  outline: 2px solid rgba(13, 126, 162, 0.22);
   border-color: var(--ambulance-management-primary);
 }
 
@@ -138,12 +132,9 @@ textarea:focus {
 }
 
 .modal-actions {
-  flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
-  padding: 0.9rem 0 1.1rem;
-  background: var(--ambulance-management-bg-surface);
   border-top: 1px solid var(--ambulance-management-border-soft);
 }
 
