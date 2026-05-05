@@ -6,8 +6,6 @@ import {
   type ModelError,
   type Vehicle,
   type VehicleCreateRequest,
-  type VehicleStatus,
-  type VehicleStatusUpdateRequest,
   type VehicleUpdateRequest,
 } from './index';
 
@@ -68,19 +66,6 @@ export const updateVehicle = async (vehicleId: number, draft: VehicleDraft, apiB
   const vehicle = await createApiClient(apiBase).vehiclesVehicleIdPut({
     vehicleId,
     vehicleUpdateRequest: toVehiclePayload(draft),
-  });
-
-  return toVehicleRecord(vehicle);
-};
-
-export const updateVehicleStatus = async (
-  vehicleId: number,
-  status: VehicleStatus,
-  apiBase?: string,
-): Promise<VehicleRecord> => {
-  const vehicle = await createApiClient(apiBase).vehiclesVehicleIdStatusPatch({
-    vehicleId,
-    vehicleStatusUpdateRequest: { status } as VehicleStatusUpdateRequest,
   });
 
   return toVehicleRecord(vehicle);

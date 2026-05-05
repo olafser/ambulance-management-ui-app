@@ -1,6 +1,6 @@
 import { Component, Host, Prop, State, h } from '@stencil/core';
 
-import { getApiErrorMessage, listVehicles, updateVehicleStatus } from '../../api/ambulance-management/client';
+import { getApiErrorMessage, listVehicles } from '../../api/ambulance-management/client';
 import { createDispatch, deleteDispatch, listDispatches, updateDispatch, updateDispatchStatus } from '../../api/ambulance-management/dispatch-client';
 import {
   createEmptyDispatchDraft,
@@ -12,7 +12,7 @@ import {
   type DispatchRecord,
   type DispatchStatus,
 } from '../../types/dispatch';
-import type { VehicleRecord, VehicleStatus } from '../../types/vehicle';
+import type { VehicleRecord } from '../../types/vehicle';
 
 @Component({
   tag: 'ambulance-management-ambulance-dispatch-management',
@@ -172,39 +172,6 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
     return selectedVehicle ? [selectedVehicle, ...availableVehicles] : availableVehicles;
   }
 
-  private getVehicleStatusForDispatchStatus(status: DispatchStatus): VehicleStatus {
-    return status === 'COMPLETED' ? 'AVAILABLE' : 'ON_MISSION';
-  }
-
-  private async syncDispatchVehicleStatus(
-    previousDispatch: Pick<DispatchRecord, 'ambulanceCallSign' | 'status'> | null,
-    nextDispatch: Pick<DispatchRecord, 'ambulanceCallSign' | 'status'>,
-  ) {
-    const previousCallSign = previousDispatch?.ambulanceCallSign.trim() ?? '';
-    const nextCallSign = nextDispatch.ambulanceCallSign.trim();
-    const nextVehicleStatus = this.getVehicleStatusForDispatchStatus(nextDispatch.status);
-
-    if (!previousCallSign && !nextCallSign) {
-      return;
-    }
-
-    if (previousCallSign && previousCallSign !== nextCallSign) {
-      const previousVehicle = this.dispatchVehicles.find((vehicle) => vehicle.callSign === previousCallSign);
-      if (previousVehicle) {
-        await updateVehicleStatus(previousVehicle.id, 'AVAILABLE', this.apiBase);
-      }
-    }
-
-    if (nextCallSign) {
-      const nextVehicle = this.dispatchVehicles.find((vehicle) => vehicle.callSign === nextCallSign);
-      if (nextVehicle) {
-        await updateVehicleStatus(nextVehicle.id, nextVehicleStatus, this.apiBase);
-      }
-    }
-
-    await this.loadDispatchVehicles();
-  }
-
   private async saveDispatch(draft: DispatchDraft) {
     if (this.isSaving) {
       return;
@@ -212,11 +179,6 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
 
     this.isSaving = true;
     this.mutationError = '';
-    const previousDispatch =
-      this.modalMode === 'edit' && this.selectedDispatch
-        ? { ambulanceCallSign: this.selectedDispatch.ambulanceCallSign, status: this.selectedDispatch.status }
-        : null;
-
     try {
       const savedDispatch =
         this.modalMode === 'create'
@@ -234,11 +196,6 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
       );
       this.selectedDispatchId = savedDispatch.id;
       this.modalMode = 'view';
-
-      await this.syncDispatchVehicleStatus(previousDispatch, {
-        ambulanceCallSign: savedDispatch.ambulanceCallSign,
-        status: savedDispatch.status,
-      });
     } catch (error) {
       this.mutationError = await getApiErrorMessage(error, 'Unable to save dispatch.');
     } finally {
@@ -259,17 +216,6 @@ export class AmbulanceManagementAmbulanceDispatchManagement {
       this.dispatches = this.dispatches
         .map((dispatch) => (dispatch.id === updatedDispatch.id ? updatedDispatch : dispatch))
         .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime());
-
-      await this.syncDispatchVehicleStatus(
-        {
-          ambulanceCallSign: this.selectedDispatch.ambulanceCallSign,
-          status: this.selectedDispatch.status,
-        },
-        {
-          ambulanceCallSign: updatedDispatch.ambulanceCallSign,
-          status: updatedDispatch.status,
-        },
-      );
     } catch (error) {
       this.statusError = await getApiErrorMessage(error, 'Unable to update dispatch status.');
     } finally {

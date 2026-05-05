@@ -7,7 +7,7 @@ info:
   version: "1.0.0"
   description: API contract for ambulance management modules including fleet and dispatch management.
   contact:
-    email: your_email@stuba.sk
+    email: xfedunchyk@stuba.sk, xskrypova@stuba.sk
   license:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
@@ -138,45 +138,6 @@ paths:
       responses:
         '204':
           description: Vehicle removed
-        '404':
-          description: Vehicle not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /vehicles/{vehicleId}/status:
-    parameters:
-      - in: path
-        name: vehicleId
-        required: true
-        description: Internal vehicle identifier.
-        schema:
-          type: integer
-          format: int64
-    patch:
-      tags:
-        - Vehicle Management
-      summary: Update ambulance vehicle status
-      description: Changes only the operational status of the ambulance vehicle.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VehicleStatusUpdateRequest'
-      responses:
-        '200':
-          description: Vehicle status updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Vehicle'
-        '400':
-          description: Invalid status update payload
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '404':
           description: Vehicle not found
           content:
@@ -462,13 +423,6 @@ components:
     VehicleUpdateRequest:
       allOf:
         - $ref: '#/components/schemas/VehicleCreateRequest'
-    VehicleStatusUpdateRequest:
-      type: object
-      required:
-        - status
-      properties:
-        status:
-          $ref: '#/components/schemas/VehicleStatus'
     DispatchStatus:
       type: string
       description: Supported ambulance dispatch workflow states.

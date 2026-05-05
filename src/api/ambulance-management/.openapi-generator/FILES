@@ -12,7 +12,6 @@ models/ModelError.ts
 models/Vehicle.ts
 models/VehicleCreateRequest.ts
 models/VehicleStatus.ts
-models/VehicleStatusUpdateRequest.ts
 models/VehicleUpdateRequest.ts
 models/index.ts
 runtime.ts
